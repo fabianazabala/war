@@ -443,6 +443,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Copyrighted by EPAM Systems: expressly forbidden to share, distribute, reprint, etc. copy or modify without a written approval of the authors: Tomasz Borek, Paweł Kierat, Marcin Ogorzałek.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>Your job is to deliver a working program per these requirements. Minimum allowed version of Java: 11. Anything higher is allowed. All games need to support special scenario codes.</p>
 </div>
@@ -618,7 +630,7 @@ JAR plugin configuration is given along with basic files in starting repository.
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>if there&#8217;s a JSON file named <code>ssc_???.json</code> present in the same directory where the JAR is it needs to be picked up.</p>
+<p>if there&#8217;s a JSON file named <code>ssc_???.json</code> present in the <code>resources</code> directory then the JAR that is built should include it and used it.</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -1428,7 +1440,7 @@ logging at most verbose level practically DUPLICATES the outputs from your UI pl
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-01-29 11:51:11 CET
+Last updated 2021-01-29 12:33:23 CET
 </div>
 </div>
 </body>

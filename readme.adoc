@@ -3,6 +3,8 @@
 :copyright: Copyrighted by EPAM Systems
 = War card game
 
+IMPORTANT: {copyright}: expressly forbidden to share, distribute, reprint, etc. copy or modify without a written approval of the authors: {authors}. 
+
 Your job is to deliver a working program per these requirements. Minimum allowed version of Java: 11. Anything higher is allowed. All games need to support special scenario codes.
 
 [IMPORTANT]
@@ -62,7 +64,7 @@ Make sure you have a `usage` function that takes care of that (bonus points if i
 
 For the sake of testing your game, it needs to honour special scenario codes. Which means:
 
-. if there's a JSON file named `ssc_???.json` present in the same directory where the JAR is it needs to be picked up.
+. if there's a JSON file named `ssc_???.json` present in the `resources` directory then the JAR that is built should include it and used it.
 .. question marks in the name merely mean there may be something between `ssc_` and `.json`, of a variable length
 . said file will have row per a player, so for 3 players it will look like that:
 
@@ -359,3 +361,4 @@ I want to use Graphical Interface! What now?:::
 . ask in the chat. There is an entire channel dedicated to Q&A.
 . look in `remarks.md` file in the same directory
 .. it's also an excellent place to leave some instructions for us, if your game requires any
+
