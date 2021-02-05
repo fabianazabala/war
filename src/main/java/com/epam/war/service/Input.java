@@ -12,6 +12,16 @@ public class Input {
     this.deckSize = deckSize;
   }
 
+  public static Input create(int playerNumber, DeckSize deckSize) {
+    if (playerNumber <= 0){
+      playerNumber = 1;
+    }
+    if (playerNumber > 5){
+      playerNumber = 5;
+    }
+    return new Input(playerNumber, deckSize);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {

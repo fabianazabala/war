@@ -19,7 +19,7 @@ public class InputHandler {
       System.exit(1);
     }
 
-    return new Input(Integer.parseInt(args[0]), DeckSize.fromCode(args[1]));
+    return Input.create(Integer.parseInt(args[0]), DeckSize.fromCode(args[1]));
   }
 
 
