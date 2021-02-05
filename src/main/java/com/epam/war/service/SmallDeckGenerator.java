@@ -1,13 +1,13 @@
-package com.epam.war.deal;
+package com.epam.war.service;
 
-import com.epam.war.card.Card;
-import com.epam.war.card.CardSuit;
-import com.epam.war.card.CardValue;
+import com.epam.war.domain.DeckSize;
+import com.epam.war.domain.Card;
+import com.epam.war.domain.CardSuit;
+import com.epam.war.domain.CardValue;
 import com.epam.war.Deck;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class SmallDeckGenerator implements DeckGenerator {
 

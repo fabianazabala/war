@@ -1,6 +1,7 @@
-package com.epam.war.deal;
+package com.epam.war.service;
 
-import com.epam.war.card.Card;
+import com.epam.war.domain.Card;
+import com.epam.war.service.CardShuffler;
 import java.util.Collections;
 import java.util.List;
 

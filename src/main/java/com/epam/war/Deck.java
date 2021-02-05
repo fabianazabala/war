@@ -1,6 +1,6 @@
 package com.epam.war;
 
-import com.epam.war.card.Card;
+import com.epam.war.domain.Card;
 import java.util.List;
 
 public class Deck {
@@ -15,8 +15,8 @@ public class Deck {
     return cards;
   }
 
-  public Card pickCard(){
-    return cards.remove(0);
+  public Card pickCard() {
+    return cards.remove(cards.size() - 1);
   }
 }
 

@@ -1,4 +1,4 @@
-package com.epam.war.card;
+package com.epam.war.domain;
 
 public enum CardSuit {
   CLUBS,
