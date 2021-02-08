@@ -1,4 +1,4 @@
-package com.epam.war;
+package com.epam.war.domain;
 
 public class Player {
 

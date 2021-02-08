@@ -53,11 +53,27 @@ public class InputHandlerTest {
   }
 
   @Test
-  public void inputHasAValidNumberOfArguments_thenArgsLengthIsTwo(){
+  public void givenValidParameters_thenReturnProperInputs() {
     InputHandler inputHandler = new InputHandler(usage);
     Input actual = inputHandler.handleArguments(new String[] {"2", "small"});
 
     assertThat(actual.getPlayerNumber()).isEqualTo(2);
     assertThat(actual.getDeckSize()).isEqualTo(DeckSize.SMALL);
+  }
+
+  @Test
+  public void misspelledParameterSmall_thenReturnsProperInput() {
+    InputHandler inputHandler = new InputHandler(usage);
+    Input actual = inputHandler.handleArguments(new String[] {"2", "sMAlL"});
+
+    assertThat(actual.getDeckSize()).isEqualTo(DeckSize.SMALL);
+  }
+
+  @Test
+  public void misspelledParameterLarge_thenReturnsProperInput() {
+    InputHandler inputHandler = new InputHandler(usage);
+    Input actual = inputHandler.handleArguments(new String[] {"2", "lArGE"});
+
+    assertThat(actual.getDeckSize()).isEqualTo(DeckSize.LARGE);
   }
 }

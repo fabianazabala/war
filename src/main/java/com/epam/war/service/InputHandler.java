@@ -10,7 +10,7 @@ public class InputHandler {
   public InputHandler(Usage usage) {
     this.usage = usage;
   }
-
+//{1, "small"}
   public Input handleArguments(String[] args) {
     if (hasInvalidNumberOfArguments(args)
         || isInvalidFirstParameter(args[0])
