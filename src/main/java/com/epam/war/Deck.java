@@ -2,6 +2,7 @@ package com.epam.war;
 
 import com.epam.war.domain.Card;
 import java.util.List;
+import java.util.Optional;
 
 public class Deck {
 
@@ -15,8 +16,15 @@ public class Deck {
     return cards;
   }
 
-  public Card pickCard() {
-    return cards.remove(cards.size() - 1);
+  public boolean hasCards() {
+    return !cards.isEmpty();
+  }
+
+  public Optional<Card> pickCard() {
+    if (!hasCards()) {
+      return Optional.empty();
+    }
+    return Optional.of(cards.remove(cards.size() - 1));
   }
 }
 
