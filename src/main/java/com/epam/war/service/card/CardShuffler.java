@@ -1,4 +1,4 @@
-package com.epam.war.service;
+package com.epam.war.service.card;
 
 import com.epam.war.domain.Card;
 import java.util.List;

@@ -1,10 +1,10 @@
-package com.epam.war.service;
+package com.epam.war.service.card;
 
-import com.epam.war.domain.DeckSize;
 import com.epam.war.domain.Card;
 import com.epam.war.domain.CardSuit;
 import com.epam.war.domain.CardValue;
-import com.epam.war.Deck;
+import com.epam.war.domain.Deck;
+import com.epam.war.domain.DeckSize;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,6 +1,5 @@
-package com.epam.war;
+package com.epam.war.domain;
 
-import com.epam.war.domain.Card;
 import java.util.List;
 import java.util.Optional;
 

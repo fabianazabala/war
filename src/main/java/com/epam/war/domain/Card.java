@@ -2,7 +2,7 @@ package com.epam.war.domain;
 
 import java.util.Objects;
 
-public class Card {
+public class Card implements Comparable<Card> {
 
   private final CardValue value;
   private final CardSuit suit;
@@ -35,6 +35,11 @@ public class Card {
 
   public CardSuit getSuit() {
     return suit;
+  }
+
+  @Override
+  public int compareTo(Card o) {
+    return Integer.compare(value.getValue(), o.value.getValue());
   }
 }
 

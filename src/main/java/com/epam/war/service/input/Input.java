@@ -1,9 +1,13 @@
-package com.epam.war.service;
+package com.epam.war.service.input;
 
 import com.epam.war.domain.DeckSize;
 import java.util.Objects;
 
 public class Input {
+
+  public static final int DEFAULT_PLAYER_NUMBER = 2;
+  public static final DeckSize DEFAULT_DECK_SIZE = DeckSize.SMALL;
+
   private final int playerNumber;
   private final DeckSize deckSize;
 
@@ -12,13 +16,19 @@ public class Input {
     this.deckSize = deckSize;
   }
 
+  public static Input create() {
+    return create(DEFAULT_PLAYER_NUMBER, DEFAULT_DECK_SIZE);
+  }
+
+  public static Input create(int playerNumber) {
+    return create(playerNumber, DEFAULT_DECK_SIZE);
+  }
+
+  public static Input create(DeckSize deckSize) {
+    return create(DEFAULT_PLAYER_NUMBER, deckSize);
+  }
+
   public static Input create(int playerNumber, DeckSize deckSize) {
-    if (playerNumber <= 0){
-      playerNumber = 1;
-    }
-    if (playerNumber > 5){
-      playerNumber = 5;
-    }
     return new Input(playerNumber, deckSize);
   }
 

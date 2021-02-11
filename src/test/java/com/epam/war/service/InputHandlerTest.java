@@ -6,6 +6,8 @@ import static org.mockito.Mockito.verify;
 
 
 import com.epam.war.domain.DeckSize;
+import com.epam.war.service.input.Input;
+import com.epam.war.service.input.InputHandler;
 import com.epam.war.service.screen.Usage;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -29,7 +31,7 @@ public class InputHandlerTest {
         inputHandler.handleArguments(new String[] {"2", "3", "4"})
     );
     assertThat(exitCode).isEqualTo(1);
-    verify(usage).usageMessage();
+    verify(usage).message();
   }
 
   @Test
@@ -39,7 +41,7 @@ public class InputHandlerTest {
         inputHandler.handleArguments(new String[] {"m", "small"})
     );
     assertThat(exitCode).isEqualTo(1);
-    verify(usage).usageMessage();
+    verify(usage).message();
   }
 
   @Test
@@ -49,7 +51,7 @@ public class InputHandlerTest {
         inputHandler.handleArguments(new String[] {"3", "toko"})
     );
     assertThat(exitCode).isEqualTo(1);
-    verify(usage).usageMessage();
+    verify(usage).message();
   }
 
   @Test

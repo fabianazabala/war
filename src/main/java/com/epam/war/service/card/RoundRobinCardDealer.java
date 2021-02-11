@@ -1,7 +1,6 @@
-package com.epam.war.service;
+package com.epam.war.service.card;
 
-import com.epam.war.Deck;
-import com.epam.war.domain.Card;
+import com.epam.war.domain.Deck;
 import com.epam.war.domain.Player;
 import java.util.List;
 

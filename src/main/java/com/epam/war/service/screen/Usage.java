@@ -2,7 +2,7 @@ package com.epam.war.service.screen;
 
 public class Usage {
 
-  public void usageMessage() {
+  public void message() {
     System.out.println("First parameter is the number of players. Second is the type of the deck " +
         "(small - 24 cards, large - 52 cards, no other options are possible).\n" +
         "    Not exactly two parameters given? Program then prints this message and exits.\n" +
