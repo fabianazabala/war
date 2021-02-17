@@ -18,6 +18,7 @@ import com.epam.war.service.input.InputHandler;
 import com.epam.war.service.player.HighestHandPlayersFinder;
 import com.epam.war.service.player.PlayerGenerator;
 import com.epam.war.service.player.SimplePlayerGenerator;
+import com.epam.war.service.screen.Dealing;
 import com.epam.war.service.screen.Game;
 import com.epam.war.service.screen.Usage;
 import java.util.List;
@@ -47,9 +48,10 @@ public class EntryPoint {
 
     Deck deck = deckGenerator.generateDeck();
     CardShuffler shuffler = new CollectionsCardShuffler();
-    CardDealer dealer = new RoundRobinCardDealer();
-    CardsFinder cardsFinder = new HighestCardsFinder();
     HighestHandPlayersFinder highestHandPlayersFinder = new HighestHandPlayersFinder();
+    Dealing dealing = new Dealing(highestHandPlayersFinder, input);
+    CardDealer dealer = new RoundRobinCardDealer(dealing);
+    CardsFinder cardsFinder = new HighestCardsFinder();
     Game game = new Game(highestHandPlayersFinder, input);
     Gameplay gameplay = new Gameplay(new Random(), cardsFinder, game);
 

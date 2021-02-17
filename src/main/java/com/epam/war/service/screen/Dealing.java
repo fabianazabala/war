@@ -15,13 +15,14 @@ import java.util.stream.Collectors;
 public class Dealing extends Screen {
 
   private final HighestHandPlayersFinder highestHandPlayersFinder;
+  private final Input input;
 
-  public Dealing(HighestHandPlayersFinder highestHandPlayersFinder) {
+  public Dealing(HighestHandPlayersFinder highestHandPlayersFinder, Input input) {
     this.highestHandPlayersFinder = highestHandPlayersFinder;
+    this.input = input;
   }
 
-  public void showScreen(Input input,
-                         List<Player> players) {
+  public void showScreen(List<Player> players) {
     /*
     WAR, a players, b deck, DEALING
     Player1 hand: [sorted cards, from highest to lowest, dupes are next to each other]
@@ -36,13 +37,13 @@ public class Dealing extends Screen {
         .append(input.getDeckSize()).append(" deck, ")
         .append("DEALING\n");
     players.forEach(p -> message.append(p.getName())
-        .append(" hand: ").append("[").append(toSortedHandValue(p)).append("\n"));
+        .append(" hand: ").append(toSortedHandValue(p)).append("\n"));
     message.append("\n");
     message.append("Lucky players: ").append(highestHandPlayersFinder.findPlayers(players)
         .map(this::toPlayerNameList)
         .orElse("none"))
         .append(".");
-    message.append(SEPARATOR);
+    message.append("\n").append(SEPARATOR);
 
     System.out.println(message.toString());
   }

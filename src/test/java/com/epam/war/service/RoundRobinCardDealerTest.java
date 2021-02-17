@@ -8,14 +8,19 @@ import com.epam.war.domain.Card;
 import com.epam.war.domain.Deck;
 import com.epam.war.domain.Player;
 import com.epam.war.service.card.RoundRobinCardDealer;
+import com.epam.war.service.screen.Dealing;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import org.mockito.Mock;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class RoundRobinCardDealerTest {
+
+  @Mock
+  Dealing dealing;
 
   List<Player> playerList;
   Deck deck;
@@ -25,7 +30,7 @@ public class RoundRobinCardDealerTest {
 
   @BeforeMethod
   public void setUp() {
-    cardDealer = new RoundRobinCardDealer();
+    cardDealer = new RoundRobinCardDealer(dealing);
   }
 
 
