@@ -4,9 +4,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 import com.epam.war.support.LoggerTest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class UsageTest extends LoggerTest {
+
+  private static final Logger logger = LoggerFactory.getLogger(Usage.class);
+
+  @BeforeClass
+  public void beforeClass() {
+    setUpLogger(logger);
+  }
 
   @Test
   public void printsExpectedMessage() {

@@ -10,21 +10,20 @@ import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.apache.logging.log4j.message.Message;
 import org.apache.logging.log4j.test.appender.ListAppender;
-import org.testng.annotations.BeforeClass;
+import org.slf4j.Logger;
 import org.testng.annotations.BeforeMethod;
 
 public class LoggerTest {
   protected ListAppender listAppender;
 
-  @BeforeClass
-  public void setUpLogger() {
+  public void setUpLogger(Logger logger) {
     LoggerContext loggerContext = (LoggerContext) LogManager.getContext(false);
 
     Configuration configuration = loggerContext.getConfiguration();
-    LoggerConfig rootLoggerConfig = configuration.getLoggerConfig("");
-    listAppender = new ListAppender("testAppender");
+    LoggerConfig loggerConfiguration = configuration.getLoggerConfig(logger.getName());
+    listAppender = new ListAppender(logger.getName() + "_testAppender");
     listAppender.start();
-    rootLoggerConfig.addAppender(listAppender, Level.ALL, null);
+    loggerConfiguration.addAppender(listAppender, Level.ALL, null);
   }
 
   @BeforeMethod

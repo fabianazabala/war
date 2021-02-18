@@ -27,7 +27,7 @@ abstract class GameplayScreen extends Screen {
     return highestHandPlayersFinder.findPlayers(players)
         .map(p -> {
           if (p.size() == 1) {
-            return p.get(0).getName() + " leads with " + handCountString(p.get(0).getHand());
+            return p.get(0).getName().toLowerCase() + " leads with " + handCountString(p.get(0).getHand());
           } else {
             return drawMessage(p);
           }

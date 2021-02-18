@@ -71,9 +71,9 @@ public class WarScreen extends GameplayScreen {
   }
 
   private String ending(Optional<Player> winner, Player player) {
-    return player.hasCards() ? winner.filter(p -> p.equals(player))
+    return winner.filter(p -> p.equals(player))
         .map(p -> " -----------> WINNER FOUND!")
-        .orElse("") : " ? EoC";
+        .orElse(player.hasCards() ? "" : " ? EoC");
   }
 
   public void endWar(int warRounds) {

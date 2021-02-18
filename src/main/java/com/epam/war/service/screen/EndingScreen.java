@@ -25,7 +25,7 @@ public class EndingScreen extends Screen {
   public void printEndingScreen(Player winner, int turn) {
     logger.info(SEPARATOR + "\n" + "WAR, " + initialPlayerNumber + " players" + ", " +
         deckSize + " deck" + ", " +
-        "turn #" + turn + " - " + winner.getName() + " WON with " +
+        "turn #" + turn + " - " + winner.getName().toLowerCase() + " WON with " +
         winner.getHand().size() + "/" + deckSize.getCardCount() + " cards");
   }
 

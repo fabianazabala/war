@@ -5,6 +5,7 @@ import com.epam.war.domain.Player;
 import com.epam.war.service.card.CardsFinder;
 import com.epam.war.service.screen.GameScreen;
 import com.epam.war.service.screen.WarScreen;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +51,7 @@ public class Gameplay {
     Card winnerCard = Optional.of(highestCards)
         .filter(c -> c.size() > 1)
         .map(tiedCards -> {
-          War war = new War(cardsFinder, warScreen);
+          War war = new War(cardsFinder, warScreen, turn);
           warScreen.printHeader(players, turn);
           Card winner = war.fight(tiedCards, table, new LinkedHashMap<>());
           warScreen.endWar(war.warRounds);
@@ -73,10 +74,12 @@ public class Gameplay {
     private final CardsFinder highestCardsFinder;
     private final WarScreen warScreen;
     private int warRounds = 0;
+    private final int turn;
 
-    private War(CardsFinder highestCardsFinder, WarScreen warScreen) {
+    private War(CardsFinder highestCardsFinder, WarScreen warScreen, int turn) {
       this.highestCardsFinder = highestCardsFinder;
       this.warScreen = warScreen;
+      this.turn = turn;
     }
 
     /**
@@ -92,13 +95,22 @@ public class Gameplay {
                        Map<Card, Player> table,
                        Map<Card, Player> warCards) {
       warRounds++;
-      Map<Card, Player> newTable = highestCards.stream().map(table::get)
+      LinkedHashMap<Card, Player> newTable = highestCards.stream().map(table::get)
           .filter(Player::hasCards)
           .collect(Collectors.toMap(Player::playCard, p -> p, (t, t2) -> t2, LinkedHashMap::new));
       table.putAll(newTable);
       warCards.putAll(newTable);
 
-      List<Card> newHighestCards = highestCardsFinder.findCard(newTable.keySet());
+      List<Card> newHighestCards = highestCardsFinder.findCard(newTable.entrySet()
+          .stream()
+          .filter(entry -> entry.getValue().hasCards())
+          .map(Map.Entry::getKey)
+          .collect(Collectors.toList()));
+
+      //If everybody ran out of cards then last player is the winner... That's unfair
+      if (newHighestCards.isEmpty()) {
+        newHighestCards = new ArrayList<>(warCards.keySet()).subList(warCards.size() - 1, warCards.size());
+      }
 
       warScreen.printTurn(warCards, newHighestCards);
 

@@ -19,4 +19,8 @@ public class CardGenerator {
         .mapToObj(i -> new Card(value, suit))
         .collect(Collectors.toList());
   }
+
+  public static Card fromValue(int value) {
+    return new Card(CardValue.fromValue(value), CardSuit.any());
+  }
 }

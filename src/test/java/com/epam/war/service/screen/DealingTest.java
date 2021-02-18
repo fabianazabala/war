@@ -18,13 +18,23 @@ import java.util.List;
 import java.util.Optional;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class DealingTest extends LoggerTest {
 
+  private static final Logger logger = LoggerFactory.getLogger(Dealing.class);
+
   @Mock
   HighestHandPlayersFinder playersFinder;
+
+  @BeforeClass
+  public void beforeClass() {
+    setUpLogger(logger);
+  }
 
   @BeforeMethod
   public void setUp() {
@@ -67,7 +77,7 @@ public class DealingTest extends LoggerTest {
             "Player1 hand: [14, 14, 14]\n" +
             "Player2 hand: [14, 14, 14]\n" +
             "\n" +
-            "Lucky players: Player1, Player2.\n" +
+            "Lucky players: player1, player2.\n" +
             "=========");
   }
 

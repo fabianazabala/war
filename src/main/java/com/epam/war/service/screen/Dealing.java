@@ -42,6 +42,7 @@ public class Dealing extends Screen {
     message.append("\n");
     message.append("Lucky players: ").append(highestHandPlayersFinder.findPlayers(players)
         .map(this::toPlayerNameList)
+        .map(String::toLowerCase)
         .orElse("none"))
         .append(".");
     message.append("\n").append(SEPARATOR);
