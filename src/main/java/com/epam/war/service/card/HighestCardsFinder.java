@@ -9,6 +9,11 @@ import java.util.stream.Collectors;
 
 public class HighestCardsFinder implements CardsFinder {
 
+  /**
+   * Finds the highest cards from the submitted collection.
+   *
+   * @return List of highest valued cards, or all the cards if none has a different value.
+   */
   @Override
   public List<Card> findCard(Collection<Card> cards) {
     return cards.stream()

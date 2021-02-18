@@ -33,6 +33,12 @@ public enum CardValue {
     return cardName;
   }
 
+  /**
+   * Returns a {@link CardValue} from its numeric value.
+   *
+   * @param value card's value.
+   * @return CardValue
+   */
   public static CardValue fromValue(int value) {
     return Arrays.stream(values())
         .filter(v -> v.getValue() == value)

@@ -14,8 +14,8 @@ public class CardGenerator {
   }
 
 
-  public static List<Card> generateSameCard(int cardNumber, CardValue value, CardSuit suit) {
-    return IntStream.range(0, cardNumber)
+  public static List<Card> generateSameCard(int cardCount, CardValue value, CardSuit suit) {
+    return IntStream.range(0, cardCount)
         .mapToObj(i -> new Card(value, suit))
         .collect(Collectors.toList());
   }

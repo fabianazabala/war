@@ -16,6 +16,11 @@ public class SimplePlayerGenerator implements PlayerGenerator {
     this.playerNumber = playerNumber;
   }
 
+  /**
+   * Generates as many players as {@link this#playerNumber} with an empty initial hand.
+   *
+   * @return generated players.
+   */
   @Override
   public List<Player> generatePlayers() {
     return IntStream.rangeClosed(1, playerNumber)

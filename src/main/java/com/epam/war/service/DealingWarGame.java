@@ -5,6 +5,7 @@ import com.epam.war.domain.Player;
 import com.epam.war.service.card.CardDealer;
 import com.epam.war.service.card.CardShuffler;
 import com.epam.war.service.gameplay.Gameplay;
+import com.epam.war.service.screen.EndingScreen;
 import java.util.List;
 
 public class DealingWarGame extends WarGame {
@@ -15,8 +16,8 @@ public class DealingWarGame extends WarGame {
 
   public DealingWarGame(List<Player> players, Deck deck,
                         CardShuffler shuffler, CardDealer dealer,
-                        Gameplay gameplay) {
-    super(players, gameplay);
+                        Gameplay gameplay, EndingScreen endingScreen) {
+    super(players, gameplay, endingScreen);
     this.shuffler = shuffler;
     this.dealer = dealer;
     this.deck = deck;

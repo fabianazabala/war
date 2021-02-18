@@ -11,13 +11,18 @@ import java.util.stream.Collectors;
 
 public class LargeDeckGenerator implements DeckGenerator {
 
+  /**
+   * Generates a deck with 52 cards where 2 is the lowest card and 14 the highest.
+   *
+   * @return Deck with cards.
+   */
   @Override
   public Deck generateDeck() {
     return new Deck(generateCards());
   }
 
   @Override
-  public DeckSize deckSize(){
+  public DeckSize deckSize() {
     return DeckSize.LARGE;
   }
 

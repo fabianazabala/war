@@ -13,6 +13,12 @@ public enum DeckSize {
     this.cardCount = cardCount;
   }
 
+  /**
+   * Returns a {@link DeckSize} from its code.
+   *
+   * @param code DeckSize code
+   * @return DeckSize
+   */
   public static DeckSize fromCode(String code) {
     return Arrays.stream(values())
         .filter(deckSize -> deckSize.code.equalsIgnoreCase(code))
@@ -20,6 +26,13 @@ public enum DeckSize {
         .orElseThrow();
   }
 
+  /**
+   * Determines which {@link DeckSize} to use based on card count
+   *
+   * @param cardCount count of cards to check.
+   * @return DeckSize
+   * @throws java.util.NoSuchElementException if there's no suitable DeckSize for this card count.
+   */
   public static DeckSize fromCardCount(int cardCount) {
     return Arrays.stream(values()).filter(ds -> ds.getCardCount() == cardCount).findFirst().orElseThrow();
   }

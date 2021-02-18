@@ -29,6 +29,12 @@ public class SpecialCasePlayerGenerator implements PlayerGenerator {
     this.specialCaseScreen = specialCaseScreen;
   }
 
+  /**
+   * Generates as many players as found in the special case file, with pre-populated hands.
+   *
+   * @return list of generated players.
+   * @throws RuntimeException if there's no special file available, or if it cannot be parsed.
+   */
   @Override
   public List<Player> generatePlayers() {
     try {

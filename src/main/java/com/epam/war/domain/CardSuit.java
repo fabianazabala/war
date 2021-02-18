@@ -8,6 +8,11 @@ public enum CardSuit {
   HEARTS,
   SPADES;
 
+  /**
+   * Returns any {@link CardSuit}
+   *
+   * @return CardSuit.
+   */
   public static CardSuit any() {
     return Arrays.stream(values()).findFirst().orElseThrow();
   }

@@ -31,6 +31,13 @@ public class Gameplay {
     this.turn = turn;
   }
 
+  /**
+   * Plays a single turn, every player will place the first card from their hands into the table.
+   * In case of a draw for first place, all involved players will go into a {@link War} until there's
+   * a winner.
+   *
+   * @param players active players.
+   */
   public void playTurn(List<Player> players) {
     Map<Card, Player> table = players.stream()
         .collect(Collectors.toMap(Player::playCard,
@@ -42,10 +49,10 @@ public class Gameplay {
 
     Card winnerCard = Optional.of(highestCards)
         .filter(c -> c.size() > 1)
-        .map(c -> {
+        .map(tiedCards -> {
           War war = new War(cardsFinder, warScreen);
           warScreen.printHeader(players, turn);
-          Card winner = war.fight(c, table, new LinkedHashMap<>());
+          Card winner = war.fight(tiedCards, table, new LinkedHashMap<>());
           warScreen.endWar(war.warRounds);
           return winner;
         })
@@ -57,20 +64,33 @@ public class Gameplay {
     turn++;
   }
 
+  public int getTurn() {
+    return turn;
+  }
+
   private static final class War {
 
     private final CardsFinder highestCardsFinder;
     private final WarScreen warScreen;
     private int warRounds = 0;
 
-    public War(CardsFinder highestCardsFinder, WarScreen warScreen) {
+    private War(CardsFinder highestCardsFinder, WarScreen warScreen) {
       this.highestCardsFinder = highestCardsFinder;
       this.warScreen = warScreen;
     }
 
-    Card fight(List<Card> highestCards,
-               Map<Card, Player> table,
-               Map<Card, Player> warCards) {
+    /**
+     * Players will go into a war playing their first card, whoever has the highest card will win the war.
+     * In case of a draw then players will continue the war until there's a winner.
+     *
+     * @param highestCards tied cards which started this war.
+     * @param table        K,V which contains cards in the table and players who played them.
+     * @param warCards     K,V which contains cards played in the war and players who played them.
+     * @return winner card.
+     */
+    private Card fight(List<Card> highestCards,
+                       Map<Card, Player> table,
+                       Map<Card, Player> warCards) {
       warRounds++;
       Map<Card, Player> newTable = highestCards.stream().map(table::get)
           .filter(Player::hasCards)

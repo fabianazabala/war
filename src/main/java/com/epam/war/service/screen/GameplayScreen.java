@@ -17,7 +17,7 @@ abstract class GameplayScreen extends Screen {
   }
 
   protected String warHeaderMessage(List<Player> players, int turn) {
-    return "WAR, " + players.size() + ", " +
+    return "WAR, " + players.size() + " players, " +
         deckSize + " deck" + ", " +
         "turn #" + turn + " - " +
         getLeadMessage(players) + "\n";

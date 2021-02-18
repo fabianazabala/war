@@ -44,7 +44,6 @@ public class WarScreen extends GameplayScreen {
     logger.info(message);
   }
 
-  //TODO: I'm losing order of cards played :( need to check why
   public void printTurn(Map<Card, Player> table, List<Card> highestCards) {
     Optional<Player> winner = Stream.of(highestCards)
         .filter(cards -> cards.size() == 1)
@@ -68,9 +67,13 @@ public class WarScreen extends GameplayScreen {
             .map(CardValue::getValue)
             .map(String::valueOf)
             .collect(Collectors.joining(" ? ")) +
-        winner.filter(p -> p.equals(player))
-            .map(p -> " -----------> WINNER FOUND!")
-            .orElse("");
+        ending(winner, player);
+  }
+
+  private String ending(Optional<Player> winner, Player player) {
+    return player.hasCards() ? winner.filter(p -> p.equals(player))
+        .map(p -> " -----------> WINNER FOUND!")
+        .orElse("") : " ? EoC";
   }
 
   public void endWar(int warRounds) {

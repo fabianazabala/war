@@ -13,6 +13,12 @@ public class RoundRobinCardDealer implements CardDealer {
     this.dealing = dealing;
   }
 
+  /**
+   * Deals all the cards in {@link Deck} to players sequentially. Then shows dealing screen.
+   *
+   * @param deck       Deck to distribute.
+   * @param playerList players which will receive the cards.
+   */
   @Override
   public void deal(Deck deck, List<Player> playerList) {
     while (deck.hasCards()) {
@@ -20,6 +26,5 @@ public class RoundRobinCardDealer implements CardDealer {
     }
 
     dealing.showScreen(playerList);
-
   }
 }

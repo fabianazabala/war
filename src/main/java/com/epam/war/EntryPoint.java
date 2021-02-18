@@ -23,6 +23,7 @@ import com.epam.war.service.player.PlayerGenerator;
 import com.epam.war.service.player.SimplePlayerGenerator;
 import com.epam.war.service.player.SpecialCasePlayerGenerator;
 import com.epam.war.service.screen.Dealing;
+import com.epam.war.service.screen.EndingScreen;
 import com.epam.war.service.screen.GameScreen;
 import com.epam.war.service.screen.SpecialCaseScreen;
 import com.epam.war.service.screen.Usage;
@@ -54,7 +55,8 @@ public class EntryPoint {
       GameScreen gameScreen = new GameScreen(highestHandPlayersFinder, deckSize);
       WarScreen warScreen = new WarScreen(highestHandPlayersFinder, deckSize);
       Gameplay gameplay = new Gameplay(cardsFinder, gameScreen, warScreen);
-      warGame = new WarGame(players, gameplay);
+      EndingScreen endingScreen = new EndingScreen(deckSize, players.size());
+      warGame = new WarGame(players, gameplay, endingScreen);
     } else {
       Usage usage = new Usage();
       InputHandler inputHandler = new InputHandler(usage);
@@ -79,7 +81,8 @@ public class EntryPoint {
       GameScreen gameScreen = new GameScreen(highestHandPlayersFinder, input.getDeckSize());
       WarScreen warScreen = new WarScreen(highestHandPlayersFinder, input.getDeckSize());
       Gameplay gameplay = new Gameplay(cardsFinder, gameScreen, warScreen);
-      warGame = new DealingWarGame(players, deck, shuffler, dealer, gameplay);
+      EndingScreen endingScreen = new EndingScreen(input.getDeckSize(), input.getPlayerNumber());
+      warGame = new DealingWarGame(players, deck, shuffler, dealer, gameplay, endingScreen);
     }
 
     warGame.play();

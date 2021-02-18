@@ -11,6 +11,11 @@ import java.util.stream.Collectors;
 
 public class SmallDeckGenerator implements DeckGenerator {
 
+  /**
+   * Generates a deck with 24 cards where 9 is the lowest card and 14 the highest.
+   *
+   * @return Deck with cards.
+   */
   @Override
   public Deck generateDeck() {
     return new Deck(generateCards());

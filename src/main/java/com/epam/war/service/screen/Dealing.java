@@ -26,15 +26,12 @@ public class Dealing extends Screen {
     this.input = input;
   }
 
+  /**
+   * Logs a dealing screen which shows that cards has been distributed amongst players.
+   *
+   * @param players list of players which received the cards.
+   */
   public void showScreen(List<Player> players) {
-    /*
-    WAR, a players, b deck, DEALING
-    Player1 hand: [sorted cards, from highest to lowest, dupes are next to each other]
-    Player...
-
-    Lucky players: player1, player2.
-    SEPARATOR
-    */
     StringBuilder message = new StringBuilder()
         .append("WAR, ")
         .append(input.getPlayerNumber()).append(" players, ")

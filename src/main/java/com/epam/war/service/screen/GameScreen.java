@@ -17,17 +17,16 @@ public class GameScreen extends GameplayScreen {
     super(highestHandPlayersFinder, deckSize);
   }
 
+  /**
+   * Logs a game screen which shows cards played in the current turn, list of turns and current lead.
+   *
+   * @param players      who played on this turn.
+   * @param tableForTurn cards played on this turn.
+   * @param turn         current turn number.
+   */
   public void showScreen(List<Player> players,
                          Map<Card, Player> tableForTurn,
                          int turn) {
-    /*
-    WAR, a players, b deck, turn #c - playerd leads with e/DECK_SIZE cards
-    Player1 played: 7
-    Player2 played: 4
-    Player3 ...
-    SEPARATOR
-    */
-
     StringBuilder message = new StringBuilder();
     message.append(warHeaderMessage(players, turn));
     tableForTurn.forEach((k, v) ->

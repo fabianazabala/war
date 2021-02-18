@@ -15,6 +15,13 @@ public class InputHandler {
     this.usage = usage;
   }
 
+  /**
+   * Parses and fixes initial input arguments. If there is an incorrect number of arguments
+   * then shows usage screen and exits.
+   *
+   * @param args string array which contains initial program arguments.
+   * @return Input which contains input parameters to use.
+   */
   public Input handleArguments(String[] args) {
     if (hasInvalidNumberOfArguments(args)) {
       usage.message();
