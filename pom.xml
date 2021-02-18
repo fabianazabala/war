@@ -8,7 +8,7 @@
     <artifactId>pre-academy.war</artifactId>
     <version>0.1</version>
     <name>War</name>
-    <description>War card game for EPAM online courses. Follow readme.html</description>
+    <description>War card gameScreen for EPAM online courses. Follow readme.html</description>
     <url>https://careers.epam-poland.pl/training/juniors-java-online-program</url>
 
     <properties>
@@ -58,6 +58,21 @@
             <artifactId>system-lambda</artifactId>
             <version>1.2.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.14.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.12.1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -93,6 +108,25 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>${version.plugin.maven.jar}</version>
                 <configuration>
@@ -100,7 +134,8 @@
                         <index>true</index>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.epam.prejap.task.war.Main</mainClass>
+                            <mainClass>com.epam.war.EntryPoint</mainClass>
+                            <classpathPrefix>lib/</classpathPrefix>
                         </manifest>
                         <manifestEntries>
                             <url>${project.url}</url>

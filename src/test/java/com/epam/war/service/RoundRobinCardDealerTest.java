@@ -2,6 +2,7 @@ package com.epam.war.service;
 
 import static com.epam.war.support.CardGenerator.generateSameCard;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 
 
 import com.epam.war.domain.Card;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -30,6 +32,7 @@ public class RoundRobinCardDealerTest {
 
   @BeforeMethod
   public void setUp() {
+    MockitoAnnotations.openMocks(this);
     cardDealer = new RoundRobinCardDealer(dealing);
   }
 
@@ -46,6 +49,7 @@ public class RoundRobinCardDealerTest {
         .allMatch(player -> player.getHand().size() == 5);
     assertThat(deck.hasCards())
         .isFalse();
+    verify(dealing).showScreen(playerList);
   }
 
   @Test
@@ -62,6 +66,7 @@ public class RoundRobinCardDealerTest {
         .hasSize(5);
     assertThat(deck.hasCards())
         .isFalse();
+    verify(dealing).showScreen(playerList);
   }
 
   @Test
@@ -74,6 +79,7 @@ public class RoundRobinCardDealerTest {
 
     assertThat(playerList.get(0).getHand())
         .isEmpty();
+    verify(dealing).showScreen(playerList);
   }
 
   private List<Player> generatePlayers(int playerNumber) {

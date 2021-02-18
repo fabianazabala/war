@@ -1,9 +1,14 @@
 package com.epam.war.service.screen;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Usage {
 
+  private static final Logger logger = LoggerFactory.getLogger(Usage.class);
+
   public void message() {
-    System.out.println("First parameter is the number of players. Second is the type of the deck " +
+    logger.info("First parameter is the number of players. Second is the type of the deck " +
         "(small - 24 cards, large - 52 cards, no other options are possible).\n" +
         "    Not exactly two parameters given? Program then prints this message and exits.\n" +
         "    Bad parameters given? Program corrects them to default values (2 and SMALL) and proceeds.\n" +

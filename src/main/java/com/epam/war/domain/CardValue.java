@@ -1,5 +1,7 @@
 package com.epam.war.domain;
 
+import java.util.Arrays;
+
 public enum CardValue {
   A("a", 14),
   J("j", 11),
@@ -29,5 +31,11 @@ public enum CardValue {
 
   public String getCardName() {
     return cardName;
+  }
+
+  public static CardValue fromValue(int value) {
+    return Arrays.stream(values())
+        .filter(v -> v.getValue() == value)
+        .findFirst().orElseThrow();
   }
 }

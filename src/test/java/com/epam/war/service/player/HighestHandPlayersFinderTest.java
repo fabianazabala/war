@@ -30,9 +30,9 @@ public class HighestHandPlayersFinderTest {
 
     assertThat(luckyPlayers)
         .isPresent()
-        .asList()
-        .hasSize(2)
-        .contains(lucky1, lucky2);
+        .hasValueSatisfying(value -> assertThat(value)
+            .hasSize(2)
+            .contains(lucky1, lucky2));
   }
 
   @Test

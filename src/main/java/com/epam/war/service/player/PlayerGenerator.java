@@ -4,5 +4,7 @@ import com.epam.war.domain.Player;
 import java.util.List;
 
 public interface PlayerGenerator {
-  List<Player> generatePlayers(int playerNumber);
+  String PLAYER_NAME_PREFIX = "Player";
+
+  List<Player> generatePlayers();
 }

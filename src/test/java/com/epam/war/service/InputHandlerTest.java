@@ -35,26 +35,6 @@ public class InputHandlerTest {
   }
 
   @Test
-  public void whenFirstParameterIsALetter_thenMessageIsPrinted() throws Exception {
-    InputHandler inputHandler = new InputHandler(usage);
-    int exitCode = catchSystemExit(() ->
-        inputHandler.handleArguments(new String[] {"m", "small"})
-    );
-    assertThat(exitCode).isEqualTo(1);
-    verify(usage).message();
-  }
-
-  @Test
-  public void whenSecondParameterIsInvalid_thenMessageIsPrinted() throws Exception {
-    InputHandler inputHandler = new InputHandler(usage);
-    int exitCode = catchSystemExit(() ->
-        inputHandler.handleArguments(new String[] {"3", "toko"})
-    );
-    assertThat(exitCode).isEqualTo(1);
-    verify(usage).message();
-  }
-
-  @Test
   public void givenValidParameters_thenReturnProperInputs() {
     InputHandler inputHandler = new InputHandler(usage);
     Input actual = inputHandler.handleArguments(new String[] {"2", "small"});
@@ -77,5 +57,30 @@ public class InputHandlerTest {
     Input actual = inputHandler.handleArguments(new String[] {"2", "lArGE"});
 
     assertThat(actual.getDeckSize()).isEqualTo(DeckSize.LARGE);
+  }
+
+
+  @Test
+  public void whenUserInputIsNegative_thenNumberOfPlayersIsOne() {
+    InputHandler inputHandler = new InputHandler(usage);
+    Input actual = inputHandler.handleArguments(new String[] {"-1", "large"});
+
+    assertThat(actual.getPlayerNumber()).isEqualTo(1);
+  }
+
+  @Test
+  public void whenUserInputIsLargerThanFive_thenNumberOfPlayersIsFive() {
+    InputHandler inputHandler = new InputHandler(usage);
+    Input actual = inputHandler.handleArguments(new String[] {"123", "large"});
+
+    assertThat(actual.getPlayerNumber()).isEqualTo(5);
+  }
+
+  @Test
+  public void whenUserInputIsZero_ThenPlayerNumberIsOne() {
+    InputHandler inputHandler = new InputHandler(usage);
+    Input actual = inputHandler.handleArguments(new String[] {"0", "large"});
+
+    assertThat(actual.getPlayerNumber()).isEqualTo(1);
   }
 }

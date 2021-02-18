@@ -2,7 +2,6 @@ package com.epam.war.domain;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 
 public class Player {
 
@@ -44,8 +43,8 @@ public class Player {
     return hand;
   }
 
-  public Card takeRandomCardFromHand(Random random) {
-    return hand.remove(random.nextInt(hand.size()));
+  public Card playCard() {
+    return hand.remove(0);
   }
 
   public void takeCard(Card card) {

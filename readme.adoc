@@ -1,7 +1,7 @@
 :icons: font
 :authors: Tomasz Borek, Paweł Kierat, Marcin Ogorzałek
 :copyright: Copyrighted by EPAM Systems
-= War card game
+= War card gameScreen
 
 IMPORTANT: {copyright}: expressly forbidden to share, distribute, reprint, etc. copy or modify without a written approval of the authors: {authors}. 
 
@@ -23,19 +23,19 @@ In case you will open the `.screen` files in the IDE, Intellij suggests using a 
 
 . 2-5 computer players (no interaction with a human required, aside from starting the program),
 . number of players is given as a starting parameter,
-. console program - the game prints to console,
+. console program - the gameScreen prints to console,
 . decks: large (52 cards, no jokers) or small (24 cards, no jokers),
 . decks are chosen per starting parameter,
 . winner is the one with all cards,
 . all players have only their names: player1, player2, ..., player5,
 . aces are highest, 2s - lowest (9s for small deck),
 . for grading purposes: all projects need to honour special scenario codes.
-. regionalize the game - all outputs should come in two languages (English and one more, of your choice)
-. game should log important information to a file using a modern logging library
+. regionalize the gameScreen - all outputs should come in two languages (English and one more, of your choice)
+. gameScreen should log important information to a file using a modern logging library
 
-IMPORTANT: **all screens MUST be as presented here, to the letter, to the dot, even with mistakes**. The game doesn't pause, the game doesn't break, the game doesn't prettify the output, the game doesn't page the output. Our scripts will do that so your game **MUSTN'T**. Seriously. We most likely will drop games which won't honour this. 0/10, don't recommend, no grading.
+IMPORTANT: **all screens MUST be as presented here, to the letter, to the dot, even with mistakes**. The gameScreen doesn't pause, the gameScreen doesn't break, the gameScreen doesn't prettify the output, the gameScreen doesn't page the output. Our scripts will do that so your gameScreen **MUSTN'T**. Seriously. We most likely will drop games which won't honour this. 0/10, don't recommend, no grading.
 
-TIP: special scenario codes are triggered by input parameters and set the game as specified. They are incredibly useful for our tests.
+TIP: special scenario codes are triggered by input parameters and set the gameScreen as specified. They are incredibly useful for our tests.
 
 == Starting the program
 
@@ -62,7 +62,7 @@ Make sure you have a `usage` function that takes care of that (bonus points if i
 
 === What usage DOESN'T say - special scenario codes
 
-For the sake of testing your game, it needs to honour special scenario codes. Which means:
+For the sake of testing your gameScreen, it needs to honour special scenario codes. Which means:
 
 . if there's a JSON file named `ssc_???.json` present in the `resources` directory then the JAR that is built should include it and used it.
 .. question marks in the name merely mean there may be something between `ssc_` and `.json`, of a variable length
@@ -75,11 +75,11 @@ include::ssc_example.json[]
 
 With a file like that:
 
-. game should start with a small deck and 3 players (there are 24 cards in the file)
+. gameScreen should start with a small deck and 3 players (there are 24 cards in the file)
 . player1 should get a hand with 2 aces, 3 10s and 2 9s and a valet. 
 . player2 should get 2 9s, 3 valets, a queen, a king and an ace
 . player3 should get the remaining cards in the deck.
-. game should begin WITHOUT dealing 
+. gameScreen should begin WITHOUT dealing
 .. dealing is skipped if the special scenario code is present
 .. instead a String "special scenario code: CAPITALIZED NAME" of the special scenario is displayed
 .. for the file above that would be `EXAMPLE`
@@ -97,9 +97,9 @@ With a file like that:
 ====
 We want you to do that to learn OO design and programming by practicing it. 
 
-You should take into account that testing randomness is difficult and use the special scenario codes to test-drive your implementation of the game.
+You should take into account that testing randomness is difficult and use the special scenario codes to test-drive your implementation of the gameScreen.
 
-With this you can have a predictable game - give your players cards and the result should be clear, along with how each turn should look like.
+With this you can have a predictable gameScreen - give your players cards and the result should be clear, along with how each turn should look like.
 ====
 
 == Game output
@@ -107,17 +107,17 @@ With this you can have a predictable game - give your players cards and the resu
 Game is a sequence of screens:
 
 1. Dealing screen - shows up once,
-2. Game screen - shows up multiple times and reflects changes in the game,
-3. War screen - may be absent, may show up multiple times, if it does, it replaces the game screen for that turn,
+2. Game screen - shows up multiple times and reflects changes in the gameScreen,
+3. War screen - may be absent, may show up multiple times, if it does, it replaces the gameScreen screen for that turn,
 4. End screen - shows up once.
 
-IMPORTANT: every screen of the game is SEPARATED from another screen by a SEPARATOR: **precisely** 9 "=" characters followed by exactly **two** blank lines, so altogether 3 lines of text.
+IMPORTANT: every screen of the gameScreen is SEPARATED from another screen by a SEPARATOR: **precisely** 9 "=" characters followed by exactly **two** blank lines, so altogether 3 lines of text.
 
-Thus your game will be outputting screens in the order above. 
+Thus your gameScreen will be outputting screens in the order above.
 
 === Automated gameplay!
 
-You probably realized that this program is non-interactive. This is a zero-player game: no HUMAN players are needed. User launches the game with two parameters and that's it. The rest is just program executing and printing.
+You probably realized that this program is non-interactive. This is a zero-player gameScreen: no HUMAN players are needed. User launches the gameScreen with two parameters and that's it. The rest is just program executing and printing.
 
 This means:
 
@@ -159,7 +159,7 @@ include::1_dealing.screen[]
 
 == 2. Game screen
 
-Once dealing is done, we move on to actual gameplay. The game prints the following screen to the console each turn:
+Once dealing is done, we move on to actual gameplay. The gameScreen prints the following screen to the console each turn:
 
 ----
 include::2_game.screen[]
@@ -189,8 +189,8 @@ NOTE: leader that is 'marked' so on the screen is just the person who currently 
 . The highest card wins them all (colours matter not). Its owner collects all the cards on the table.
 .. Order of collection starts with player with the lowest number.
 . Next turn - and so on until only one player has cards - that's the winner.
-. For screen here, see game screen above.
-. The player who lost his cards simply disappears from the game screen. His line simply stops appearing. So if we had a 3 player game and player2 lost his last card, then in the next turn we would have a screen that shows: 
+. For screen here, see gameScreen screen above.
+. The player who lost his cards simply disappears from the gameScreen screen. His line simply stops appearing. So if we had a 3 player gameScreen and player2 lost his last card, then in the next turn we would have a screen that shows:
 
 ----
 WAR, a-1 players, b deck, turn #c - playerd leads with e/DECK_SIZE cards
@@ -199,9 +199,9 @@ Player3 played: 2
 SEPARATOR
 ----
 
-=== Changes between game screens
+=== Changes between gameScreen screens
 
-Each game turn updates the screen:
+Each gameScreen turn updates the screen:
 
 . turn number goes up,
 . player who leads may change,
@@ -213,9 +213,9 @@ Each game turn updates the screen:
 If there are TWO OR MORE highest cards, we have a war. War is a series of clashes (at least two) that ends when one player wins the clash, uncontested. War takes an entire turn (so participants clash and clash and clash until one of them wins over everyone else and turn number is NOT increased.
 
 [NOTE]
-.War screen replaces the game screen?
+.War screen replaces the gameScreen screen?
 ====
-Remember that from the game output section? This means you will print game screen only if there's no war. 
+Remember that from the gameScreen output section? This means you will print gameScreen screen only if there's no war.
 ====
 
 1. All cards that are lower than the fighting pair are stored aside. They are lost to their owners, they will be the prize of a winner.
@@ -244,7 +244,7 @@ If there's no leader (`e` parameter same for more than 1 player) things should b
 
 IMPORTANT: war or no war, we count cards as we did - when turn ends and AFTER cards change hands. Even it this means 'leader' is marked incorrectly.
 
-=== What when one loses the game during war?
+=== What when one loses the gameScreen during war?
 
 Player who lost, simply stops being updated, so if he put out 6 cards and lost them all, he doesn't output any more cards in subsequent rounds (clashes).
 
@@ -270,12 +270,12 @@ SEPARATOR
 What happened?
 
 . At turn 122 war happened when everybody had 8 cards (DRAW, no leader).
-. No game screen happened, first war screen happened instead showing all players playing 9s.
+. No gameScreen screen happened, first war screen happened instead showing all players playing 9s.
 . 2nd round of war, hidden cards were placed down and no winner was found, 2nd war screen was done, updated.
 . 3rd round of war, hidden cards were placed down, still no winner, 3rd war screen was printed.
 . 4th round of war (the screen you see above) hidden cards were placed down and *then everybody ran out of cards*.
-. Player1 first! , this player lost the game, but others still have cards.
-. Player2 was tallied next, this player lost the game, but one more player has cards.
+. Player1 first! , this player lost the gameScreen, but others still have cards.
+. Player2 was tallied next, this player lost the gameScreen, but one more player has cards.
 . Player3 is the only player with cards, he's the winner.
 . EoC markers were printed for players who had *lower* numbers.
 . Remaining player is marked on screen as a winner *despite him, too, being out of cards*.
@@ -292,7 +292,7 @@ Each war round updates the screen:
 . new hidden cards appear with each clash (marked as `?`),
 . new revealed cards appear with each clash.
 
-Remember: war lasts ONE TURN, so game turn and leader and his card number (or "DRAW") stay the same. 
+Remember: war lasts ONE TURN, so gameScreen turn and leader and his card number (or "DRAW") stay the same.
 
 == Ending
 
@@ -310,7 +310,7 @@ WARNING: location of the SEPARATOR has moved! It's not CLOSING the screen but OP
 Aside from special scenario codes you need to:
 
 . log important information
-. have the game regionalized - we suggest using `properties` for it but feel free to go your own way
+. have the gameScreen regionalized - we suggest using `properties` for it but feel free to go your own way
 
 === Regionalization
 
@@ -318,21 +318,21 @@ Aside from special scenario codes you need to:
 . English is the primary language, the default language
 .. not having English counts as FAILING the task
 . second language is up to you: Polish, French, Italian, Russian, Ukrainian
-.. game should work in both!
+.. gameScreen should work in both!
 . tests will be run in English (firstly and foremostly)
 
 === Logging
 
 IMPORTANT: logging at most verbose level practically DUPLICATES the outputs from your UI plus offers debug / tracing info. Therefore - do it to a file, not to console.
 
-. for auditing purposes game should allow log the entire game to a file
+. for auditing purposes gameScreen should allow log the entire gameScreen to a file
 .. file should be called `audit_yyyy_mm_dd_HH_MM_ss.log` - which means year, month, etc.
 . log levels should be customizable via a config file
-. on FATAL (or equivalent - most serious) logging level the game should ONLY display critical messages
+. on FATAL (or equivalent - most serious) logging level the gameScreen should ONLY display critical messages
 .. exceptions
 .. crashes
 .. final result
-. on ERROR (or second most serious) logging level the game should display
+. on ERROR (or second most serious) logging level the gameScreen should display
 .. everything from the higher level
 .. wars (when two players put out a same card)
 . most verbose level has everything, duplicating (or perhaps more) the output 
@@ -360,5 +360,5 @@ I want to use Graphical Interface! What now?:::
 
 . ask in the chat. There is an entire channel dedicated to Q&A.
 . look in `remarks.md` file in the same directory
-.. it's also an excellent place to leave some instructions for us, if your game requires any
+.. it's also an excellent place to leave some instructions for us, if your gameScreen requires any
 

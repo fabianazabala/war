@@ -20,6 +20,10 @@ public enum DeckSize {
         .orElseThrow();
   }
 
+  public static DeckSize fromCardCount(int cardCount) {
+    return Arrays.stream(values()).filter(ds -> ds.getCardCount() == cardCount).findFirst().orElseThrow();
+  }
+
   @Override
   public String toString() {
     return code.toUpperCase();

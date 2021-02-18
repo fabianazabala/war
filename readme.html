@@ -7,7 +7,7 @@
 <meta name="generator" content="Asciidoctor 1.5.7.1">
 <meta name="author" content="Tomasz Borek, Paweł Kierat, Marcin Ogorzałek">
 <meta name="copyright" content="Copyrighted by EPAM Systems">
-<title>War card game</title>
+<title>War card gameScreen</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -435,7 +435,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
-<h1>War card game</h1>
+    <h1>War card gameScreen</h1>
 <div class="details">
 <span id="author" class="author">Tomasz Borek, Paweł Kierat, Marcin Ogorzałek</span><br>
 </div>
@@ -512,7 +512,7 @@ In case you will open the <code>.screen</code> files in the IDE, Intellij sugges
 <p>number of players is given as a starting parameter,</p>
 </li>
 <li>
-<p>console program - the game prints to console,</p>
+    <p>console program - the gameScreen prints to console,</p>
 </li>
 <li>
 <p>decks: large (52 cards, no jokers) or small (24 cards, no jokers),</p>
@@ -533,10 +533,10 @@ In case you will open the <code>.screen</code> files in the IDE, Intellij sugges
 <p>for grading purposes: all projects need to honour special scenario codes.</p>
 </li>
 <li>
-<p>regionalize the game - all outputs should come in two languages (English and one more, of your choice)</p>
+    <p>regionalize the gameScreen - all outputs should come in two languages (English and one more, of your choice)</p>
 </li>
 <li>
-<p>game should log important information to a file using a modern logging library</p>
+    <p>gameScreen should log important information to a file using a modern logging library</p>
 </li>
 </ol>
 </div>
@@ -546,9 +546,13 @@ In case you will open the <code>.screen</code> files in the IDE, Intellij sugges
 <td class="icon">
 <i class="fa icon-important" title="Important"></i>
 </td>
-<td class="content">
-<strong>all screens MUST be as presented here, to the letter, to the dot, even with mistakes</strong>. The game doesn&#8217;t pause, the game doesn&#8217;t break, the game doesn&#8217;t prettify the output, the game doesn&#8217;t page the output. Our scripts will do that so your game <strong>MUSTN&#8217;T</strong>. Seriously. We most likely will drop games which won&#8217;t honour this. 0/10, don&#8217;t recommend, no grading.
-</td>
+    <td class="content">
+        <strong>all screens MUST be as presented here, to the letter, to the dot, even with mistakes</strong>. The
+        gameScreen doesn&#8217;t pause, the gameScreen doesn&#8217;t break, the gameScreen doesn&#8217;t prettify the
+        output, the gameScreen doesn&#8217;t page the output. Our scripts will do that so your gameScreen <strong>MUSTN&#8217;T</strong>.
+        Seriously. We most likely will drop games which won&#8217;t honour this. 0/10, don&#8217;t recommend, no
+        grading.
+    </td>
 </tr>
 </table>
 </div>
@@ -559,7 +563,8 @@ In case you will open the <code>.screen</code> files in the IDE, Intellij sugges
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-special scenario codes are triggered by input parameters and set the game as specified. They are incredibly useful for our tests.
+    special scenario codes are triggered by input parameters and set the gameScreen as specified. They are incredibly
+    useful for our tests.
 </td>
 </tr>
 </table>
@@ -625,7 +630,7 @@ JAR plugin configuration is given along with basic files in starting repository.
 <div class="sect2">
 <h3 id="_what_usage_doesnt_say_special_scenario_codes">What usage DOESN&#8217;T say - special scenario codes</h3>
 <div class="paragraph">
-<p>For the sake of testing your game, it needs to honour special scenario codes. Which means:</p>
+    <p>For the sake of testing your gameScreen, it needs to honour special scenario codes. Which means:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -660,7 +665,7 @@ JAR plugin configuration is given along with basic files in starting repository.
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>game should start with a small deck and 3 players (there are 24 cards in the file)</p>
+    <p>gameScreen should start with a small deck and 3 players (there are 24 cards in the file)</p>
 </li>
 <li>
 <p>player1 should get a hand with 2 aces, 3 10s and 2 9s and a valet.</p>
@@ -672,7 +677,7 @@ JAR plugin configuration is given along with basic files in starting repository.
 <p>player3 should get the remaining cards in the deck.</p>
 </li>
 <li>
-<p>game should begin WITHOUT dealing</p>
+    <p>gameScreen should begin WITHOUT dealing</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -729,10 +734,12 @@ JAR plugin configuration is given along with basic files in starting repository.
 <p>We want you to do that to learn OO design and programming by practicing it.</p>
 </div>
 <div class="paragraph">
-<p>You should take into account that testing randomness is difficult and use the special scenario codes to test-drive your implementation of the game.</p>
+    <p>You should take into account that testing randomness is difficult and use the special scenario codes to
+        test-drive your implementation of the gameScreen.</p>
 </div>
 <div class="paragraph">
-<p>With this you can have a predictable game - give your players cards and the result should be clear, along with how each turn should look like.</p>
+    <p>With this you can have a predictable gameScreen - give your players cards and the result should be clear, along
+        with how each turn should look like.</p>
 </div>
 </td>
 </tr>
@@ -753,10 +760,11 @@ JAR plugin configuration is given along with basic files in starting repository.
 <p>Dealing screen - shows up once,</p>
 </li>
 <li>
-<p>Game screen - shows up multiple times and reflects changes in the game,</p>
+    <p>Game screen - shows up multiple times and reflects changes in the gameScreen,</p>
 </li>
 <li>
-<p>War screen - may be absent, may show up multiple times, if it does, it replaces the game screen for that turn,</p>
+    <p>War screen - may be absent, may show up multiple times, if it does, it replaces the gameScreen screen for that
+        turn,</p>
 </li>
 <li>
 <p>End screen - shows up once.</p>
@@ -769,19 +777,22 @@ JAR plugin configuration is given along with basic files in starting repository.
 <td class="icon">
 <i class="fa icon-important" title="Important"></i>
 </td>
-<td class="content">
-every screen of the game is SEPARATED from another screen by a SEPARATOR: <strong>precisely</strong> 9 "=" characters followed by exactly <strong>two</strong> blank lines, so altogether 3 lines of text.
-</td>
+    <td class="content">
+        every screen of the gameScreen is SEPARATED from another screen by a SEPARATOR: <strong>precisely</strong> 9 "="
+        characters followed by exactly <strong>two</strong> blank lines, so altogether 3 lines of text.
+    </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Thus your game will be outputting screens in the order above.</p>
+    <p>Thus your gameScreen will be outputting screens in the order above.</p>
 </div>
 <div class="sect2">
 <h3 id="_automated_gameplay">Automated gameplay!</h3>
 <div class="paragraph">
-<p>You probably realized that this program is non-interactive. This is a zero-player game: no HUMAN players are needed. User launches the game with two parameters and that&#8217;s it. The rest is just program executing and printing.</p>
+    <p>You probably realized that this program is non-interactive. This is a zero-player gameScreen: no HUMAN players
+        are needed. User launches the gameScreen with two parameters and that&#8217;s it. The rest is just program
+        executing and printing.</p>
 </div>
 <div class="paragraph">
 <p>This means:</p>
@@ -899,7 +910,8 @@ SEPARATOR</pre>
 <h2 id="_2_game_screen">2. Game screen</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Once dealing is done, we move on to actual gameplay. The game prints the following screen to the console each turn:</p>
+    <p>Once dealing is done, we move on to actual gameplay. The gameScreen prints the following screen to the console
+        each turn:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -990,10 +1002,12 @@ leader that is 'marked' so on the screen is just the person who currently holds 
 <p>Next turn - and so on until only one player has cards - that&#8217;s the winner.</p>
 </li>
 <li>
-<p>For screen here, see game screen above.</p>
+    <p>For screen here, see gameScreen screen above.</p>
 </li>
 <li>
-<p>The player who lost his cards simply disappears from the game screen. His line simply stops appearing. So if we had a 3 player game and player2 lost his last card, then in the next turn we would have a screen that shows:</p>
+    <p>The player who lost his cards simply disappears from the gameScreen screen. His line simply stops appearing. So
+        if we had a 3 player gameScreen and player2 lost his last card, then in the next turn we would have a screen
+        that shows:</p>
 </li>
 </ol>
 </div>
@@ -1007,9 +1021,9 @@ SEPARATOR</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_changes_between_game_screens">Changes between game screens</h3>
+    <h3 id="_changes_between_game_screens">Changes between gameScreen screens</h3>
 <div class="paragraph">
-<p>Each game turn updates the screen:</p>
+    <p>Each gameScreen turn updates the screen:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -1043,9 +1057,10 @@ SEPARATOR</pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<div class="title">War screen replaces the game screen?</div>
+    <div class="title">War screen replaces the gameScreen screen?</div>
 <div class="paragraph">
-<p>Remember that from the game output section? This means you will print game screen only if there&#8217;s no war.</p>
+    <p>Remember that from the gameScreen output section? This means you will print gameScreen screen only if there&#8217;s
+        no war.</p>
 </div>
 </td>
 </tr>
@@ -1130,7 +1145,7 @@ war or no war, we count cards as we did - when turn ends and AFTER cards change 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_what_when_one_loses_the_game_during_war">What when one loses the game during war?</h3>
+    <h3 id="_what_when_one_loses_the_game_during_war">What when one loses the gameScreen during war?</h3>
 <div class="paragraph">
 <p>Player who lost, simply stops being updated, so if he put out 6 cards and lost them all, he doesn&#8217;t output any more cards in subsequent rounds (clashes).</p>
 </div>
@@ -1166,7 +1181,7 @@ SEPARATOR</pre>
 <p>At turn 122 war happened when everybody had 8 cards (DRAW, no leader).</p>
 </li>
 <li>
-<p>No game screen happened, first war screen happened instead showing all players playing 9s.</p>
+    <p>No gameScreen screen happened, first war screen happened instead showing all players playing 9s.</p>
 </li>
 <li>
 <p>2nd round of war, hidden cards were placed down and no winner was found, 2nd war screen was done, updated.</p>
@@ -1178,10 +1193,10 @@ SEPARATOR</pre>
 <p>4th round of war (the screen you see above) hidden cards were placed down and <strong>then everybody ran out of cards</strong>.</p>
 </li>
 <li>
-<p>Player1 first! , this player lost the game, but others still have cards.</p>
+    <p>Player1 first! , this player lost the gameScreen, but others still have cards.</p>
 </li>
 <li>
-<p>Player2 was tallied next, this player lost the game, but one more player has cards.</p>
+    <p>Player2 was tallied next, this player lost the gameScreen, but one more player has cards.</p>
 </li>
 <li>
 <p>Player3 is the only player with cards, he&#8217;s the winner.</p>
@@ -1232,7 +1247,7 @@ for clarity&#8217;s sake - if it wouldn&#8217;t be a draw but there would be a l
 </ol>
 </div>
 <div class="paragraph">
-<p>Remember: war lasts ONE TURN, so game turn and leader and his card number (or "DRAW") stay the same.</p>
+    <p>Remember: war lasts ONE TURN, so gameScreen turn and leader and his card number (or "DRAW") stay the same.</p>
 </div>
 </div>
 </div>
@@ -1275,7 +1290,8 @@ location of the SEPARATOR has moved! It&#8217;s not CLOSING the screen but OPENI
 <p>log important information</p>
 </li>
 <li>
-<p>have the game regionalized - we suggest using <code>properties</code> for it but feel free to go your own way</p>
+    <p>have the gameScreen regionalized - we suggest using <code>properties</code> for it but feel free to go your own
+        way</p>
 </li>
 </ol>
 </div>
@@ -1301,7 +1317,7 @@ location of the SEPARATOR has moved! It&#8217;s not CLOSING the screen but OPENI
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>game should work in both!</p>
+    <p>gameScreen should work in both!</p>
 </li>
 </ol>
 </div>
@@ -1329,7 +1345,7 @@ logging at most verbose level practically DUPLICATES the outputs from your UI pl
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>for auditing purposes game should allow log the entire game to a file</p>
+    <p>for auditing purposes gameScreen should allow log the entire gameScreen to a file</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -1342,7 +1358,7 @@ logging at most verbose level practically DUPLICATES the outputs from your UI pl
 <p>log levels should be customizable via a config file</p>
 </li>
 <li>
-<p>on FATAL (or equivalent - most serious) logging level the game should ONLY display critical messages</p>
+    <p>on FATAL (or equivalent - most serious) logging level the gameScreen should ONLY display critical messages</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -1358,7 +1374,7 @@ logging at most verbose level practically DUPLICATES the outputs from your UI pl
 </div>
 </li>
 <li>
-<p>on ERROR (or second most serious) logging level the game should display</p>
+    <p>on ERROR (or second most serious) logging level the gameScreen should display</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -1427,7 +1443,7 @@ logging at most verbose level practically DUPLICATES the outputs from your UI pl
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>it&#8217;s also an excellent place to leave some instructions for us, if your game requires any</p>
+    <p>it&#8217;s also an excellent place to leave some instructions for us, if your gameScreen requires any</p>
 </li>
 </ol>
 </div>

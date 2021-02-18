@@ -11,8 +11,12 @@ import com.epam.war.service.player.HighestHandPlayersFinder;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Dealing extends Screen {
+
+  private static final Logger logger = LoggerFactory.getLogger(Dealing.class);
 
   private final HighestHandPlayersFinder highestHandPlayersFinder;
   private final Input input;
@@ -45,7 +49,7 @@ public class Dealing extends Screen {
         .append(".");
     message.append("\n").append(SEPARATOR);
 
-    System.out.println(message.toString());
+    logger.info(message.toString());
   }
 
   private String toPlayerNameList(List<Player> players) {
