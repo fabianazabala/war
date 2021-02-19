@@ -10,7 +10,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import org.apache.commons.lang3.tuple.Pair;
 
 public class Gameplay {
 
@@ -53,10 +55,18 @@ public class Gameplay {
         .filter(c -> c.size() > 1)
         .map(tiedCards -> {
           warScreen.printHeader(players, turn);
-          War war = new War(cardsFinder, new LinkedHashMap<>());
+          List<Pair<Optional<Card>, Player>> warCards = new ArrayList<>();
+          highestCards.forEach(card -> warCards.add(Pair.of(Optional.of(card), table.get(card))));
+          War war = new War(cardsFinder, warCards);
           Card winner = war.fight(tiedCards, table);
-          warScreen.printTurn(war.warCards, war.warHighestCards);
+          warScreen.printTurn(war.warCards, table.get(winner));
           warScreen.endWar(war.warRounds);
+          war.warCards.stream().map(Pair::getLeft)
+              .filter(Optional::isPresent)
+              .map(Optional::get)
+              .filter(Card::isFlipped)
+              .forEach(Card::flip);
+
           return winner;
         })
         .orElse(highestCards.get(0));
@@ -73,13 +83,12 @@ public class Gameplay {
   private static final class War {
 
     private final CardsFinder highestCardsFinder;
-    private final Map<Card, Player> warCards;
-    private List<Card> warHighestCards;
+    private final List<Pair<Optional<Card>, Player>> warCards;
 
     private int warRounds = 0;
 
     private War(CardsFinder highestCardsFinder,
-                Map<Card, Player> warCards) {
+                List<Pair<Optional<Card>, Player>> warCards) {
       this.highestCardsFinder = highestCardsFinder;
       this.warCards = warCards;
     }
@@ -95,30 +104,43 @@ public class Gameplay {
     private Card fight(List<Card> highestCards,
                        Map<Card, Player> table) {
       warRounds++;
-      LinkedHashMap<Card, Player> newTable = highestCards.stream().map(table::get)
-          .filter(Player::hasCards)
-          .collect(Collectors.toMap(Player::playCard, p -> p, (t, t2) -> t2, LinkedHashMap::new));
-      table.putAll(newTable);
-      warCards.putAll(newTable);
+      List<Pair<Player, Optional<Card>>> newTable = newTable(highestCards, table);
+      newTable.forEach((pair) -> pair.getRight().ifPresent(Card::flip));
+      newTable.addAll(newTable(highestCards, table));
 
-      List<Card> newHighestCards = highestCardsFinder.findCard(newTable.entrySet()
-          .stream()
-          .filter(entry -> entry.getValue().hasCards())
-          .map(Map.Entry::getKey)
+      newTable.forEach(p -> p.getRight().ifPresent(card -> table.put(card, p.getLeft())));
+      newTable.forEach(p -> warCards.add(Pair.of(p.getRight(), p.getLeft())));
+
+      List<Card> newHighestCards = highestCardsFinder.findCard(newTable.stream()
+          .map(Pair::getRight)
+          .filter(Optional::isPresent)
+          .map(Optional::get)
+          .filter(Predicate.not(Card::isFlipped))
           .collect(Collectors.toList()));
 
       //If everybody ran out of cards then last player is the winner... That's unfair
       if (newHighestCards.isEmpty()) {
-        newHighestCards = new ArrayList<>(warCards.keySet())
-            .subList(warCards.size() - 1, warCards.size());
+        newHighestCards = warCards.stream()
+            .map(Pair::getLeft)
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .reduce((first, second) -> second)
+            .stream()
+            .collect(Collectors.toList());
       }
-      this.warHighestCards = newHighestCards;
 
       if (newHighestCards.size() > 1) {
         return fight(newHighestCards, table);
       } else {
         return newHighestCards.get(0);
       }
+    }
+
+    private List<Pair<Player, Optional<Card>>> newTable(List<Card> highestCards, Map<Card, Player> table) {
+      return highestCards.stream()
+          .map(table::get)
+          .map(p -> Pair.of(p, p.playCardIfPossible()))
+          .collect(Collectors.toList());
     }
   }
 }

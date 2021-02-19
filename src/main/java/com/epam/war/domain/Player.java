@@ -2,6 +2,7 @@ package com.epam.war.domain;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Player {
 
@@ -45,6 +46,10 @@ public class Player {
 
   public Card playCard() {
     return hand.remove(0);
+  }
+
+  public Optional<Card> playCardIfPossible() {
+    return hasCards() ? Optional.of(hand.remove(0)) : Optional.empty();
   }
 
   public void takeCard(Card card) {

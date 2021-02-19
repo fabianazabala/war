@@ -23,4 +23,10 @@ public class CardGenerator {
   public static Card fromValue(int value) {
     return new Card(CardValue.fromValue(value), CardSuit.any());
   }
+
+  public static Card flipped(int value) {
+    Card card = new Card(CardValue.fromValue(value), CardSuit.any());
+    card.flip();
+    return card;
+  }
 }

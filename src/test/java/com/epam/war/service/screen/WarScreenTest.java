@@ -13,11 +13,11 @@ import com.epam.war.service.player.HighestHandPlayersFinder;
 import com.epam.war.support.CardGenerator;
 import com.epam.war.support.LoggerTest;
 import com.epam.war.support.TestPlayerGenerator;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
+import org.apache.commons.lang3.tuple.Pair;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
@@ -81,39 +81,20 @@ public class WarScreenTest extends LoggerTest {
   }
 
   @Test
-  public void givenMultipleCardsPlayed_cardsAreConcatenated() {
-    Map<Card, Player> played = new LinkedHashMap<>();
-    Player player1 = TestPlayerGenerator.withHighHand(1, 5);
-    Player player2 = TestPlayerGenerator.withHighHand(2, 5);
-
-    played.put(CardGenerator.fromValue(10), player1);
-    played.put(CardGenerator.fromValue(10), player2);
-    played.put(CardGenerator.fromValue(11), player1);
-    played.put(CardGenerator.fromValue(11), player2);
-
-    warScreen.printTurn(played, player1.getHand());
-
-    assertThat(getFormattedMessages())
-        .hasSize(2);
-    assertThat(getFormattedMessages().get(0))
-        .isEqualTo("Player1 played: 10 ? 11");
-    assertThat(getFormattedMessages().get(1))
-        .isEqualTo("Player2 played: 10 ? 11");
-  }
-
-  @Test
-  public void givenMultipleCardsPlayedAndAWinner_cardsAreConcatenatedAndWinnerAtTheEnd() {
-    Map<Card, Player> played = new LinkedHashMap<>();
-    Player player1 = TestPlayerGenerator.withHighHand(1, 5);
-    Player player2 = TestPlayerGenerator.withHighHand(2, 5);
+  public void givenFlippedAndNormalCardsAndAWinner_cardsAreConcatenatedAndWinnerAtTheEnd() {
+    List<Pair<Optional<Card>, Player>> played = new ArrayList<>();
+    Player player1 = TestPlayerGenerator.withHighHand(1, 8);
+    Player player2 = TestPlayerGenerator.withHighHand(2, 8);
     Card winnerCard = CardGenerator.fromValue(12);
 
-    played.put(CardGenerator.fromValue(10), player1);
-    played.put(CardGenerator.fromValue(10), player2);
-    played.put(CardGenerator.fromValue(11), player1);
-    played.put(winnerCard, player2);
+    played.add(Pair.of(Optional.of(CardGenerator.fromValue(10)), player1));
+    played.add(Pair.of(Optional.of(CardGenerator.fromValue(10)), player2));
+    played.add(Pair.of(Optional.of(CardGenerator.flipped(11)), player1));
+    played.add(Pair.of(Optional.of(CardGenerator.flipped(11)), player2));
+    played.add(Pair.of(Optional.of(CardGenerator.fromValue(11)), player1));
+    played.add(Pair.of(Optional.of(winnerCard), player2));
 
-    warScreen.printTurn(played, List.of(winnerCard));
+    warScreen.printTurn(played, player2);
 
     assertThat(getFormattedMessages())
         .hasSize(2);
@@ -124,25 +105,48 @@ public class WarScreenTest extends LoggerTest {
   }
 
   @Test
-  public void givenMultipleCardsPlayedAndOutOfCard_cardsAreConcatenatedAndEoCAtTheEnd() {
-    Map<Card, Player> played = new LinkedHashMap<>();
+  public void givenPlayerWithNoCards_EoCIsConcatenatedAtTheEnd() {
+    List<Pair<Optional<Card>, Player>> played = new ArrayList<>();
+    Player player1 = TestPlayerGenerator.withHighHand(1, 8);
+    Player player2 = TestPlayerGenerator.withHighHand(2, 8);
+    Card winnerCard = CardGenerator.fromValue(12);
+
+    played.add(Pair.of(Optional.of(CardGenerator.fromValue(10)), player1));
+    played.add(Pair.of(Optional.of(CardGenerator.fromValue(10)), player2));
+    played.add(Pair.of(Optional.of(CardGenerator.flipped(11)), player1));
+    played.add(Pair.of(Optional.of(CardGenerator.flipped(11)), player2));
+    played.add(Pair.of(Optional.empty(), player1));
+    played.add(Pair.of(Optional.of(winnerCard), player2));
+
+    warScreen.printTurn(played, player2);
+
+    assertThat(getFormattedMessages())
+        .hasSize(2);
+    assertThat(getFormattedMessages().get(0))
+        .isEqualTo("Player1 played: 10 ? EoC");
+    assertThat(getFormattedMessages().get(1))
+        .isEqualTo("Player2 played: 10 ? 12 -----------> WINNER FOUND!");
+  }
+
+  @Test
+  public void givenMultipleCardsPlayed_cardsAreConcatenatedAndWinnerAtTheEnd() {
+    List<Pair<Optional<Card>, Player>> played = new ArrayList<>();
     Player player1 = new Player("Player1", Collections.emptyList());
     Player player2 = TestPlayerGenerator.withHighHand(2, 5);
-    Card winnerCard = CardGenerator.fromValue(12);
 
-    played.put(CardGenerator.fromValue(10), player1);
-    played.put(CardGenerator.fromValue(10), player2);
-    played.put(CardGenerator.fromValue(11), player1);
-    played.put(winnerCard, player2);
+    played.add(Pair.of(Optional.of(CardGenerator.fromValue(10)), player1));
+    played.add(Pair.of(Optional.of(CardGenerator.fromValue(10)), player2));
+    played.add(Pair.of(Optional.of(CardGenerator.fromValue(11)), player1));
+    played.add(Pair.of(Optional.of(CardGenerator.fromValue(12)), player2));
 
-    warScreen.printTurn(played, List.of(winnerCard));
+    warScreen.printTurn(played, player2);
 
     assertThat(getFormattedMessages())
         .hasSize(2);
     assertThat(getFormattedMessages().get(0))
-        .isEqualTo("Player1 played: 10 ? 11 ? EoC");
+        .isEqualTo("Player1 played: 10 11");
     assertThat(getFormattedMessages().get(1))
-        .isEqualTo("Player2 played: 10 ? 12 -----------> WINNER FOUND!");
+        .isEqualTo("Player2 played: 10 12 -----------> WINNER FOUND!");
   }
 
   @Test

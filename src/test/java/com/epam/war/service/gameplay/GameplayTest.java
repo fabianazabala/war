@@ -19,6 +19,9 @@ import com.epam.war.service.screen.WarScreen;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import org.apache.commons.lang3.tuple.Pair;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
@@ -36,6 +39,8 @@ public class GameplayTest {
   WarScreen warScreen;
   @Captor
   ArgumentCaptor<Map<Card, Player>> tableCaptor;
+  @Captor
+  ArgumentCaptor<List<Pair<Optional<Card>, Player>>> warCardsCaptor;
   @Captor
   ArgumentCaptor<List<Card>> sakura;
 
@@ -124,17 +129,17 @@ public class GameplayTest {
     gameplay.playTurn(players);
 
     verify(warScreen).printHeader(eq(players), eq(1));
-    verify(warScreen).printTurn(tableCaptor.capture(), sakura.capture());
-    verify(warScreen).endWar(eq(initialCardCount - 1));
-    Map<Card, Player> capturedTable = tableCaptor.getValue();
-    List<Card> capturedCards = sakura.getValue();
+    verify(warScreen).printTurn(warCardsCaptor.capture(), eq(winner));
+    verify(warScreen).endWar(eq(initialCardCount / 2));
 
-    assertThat(capturedCards)
-        .hasSize(1)
-        .contains(winner.getHand().get(winner.getHand().size() - 1));
-    assertThat(capturedTable)
-        .hasSize((initialCardCount * players.size()) - players.size());
-    assertThat(capturedTable)
-        .doesNotContainKeys(firstRound.toArray(new Card[0]));
+    List<Pair<Optional<Card>, Player>> capturedWarCards = warCardsCaptor.getValue();
+    assertThat(capturedWarCards)
+        .hasSize(initialCardCount * players.size() + players.size());
+    assertThat(capturedWarCards.stream()
+        .map(Pair::getLeft)
+        .filter(Optional::isPresent)
+        .map(Optional::get)
+        .collect(Collectors.toList()))
+        .contains(firstRound.toArray(new Card[0]));
   }
 }

@@ -8,6 +8,7 @@ public class Card implements Comparable<Card> {
   private final UUID cardId;
   private final CardValue value;
   private final CardSuit suit;
+  private boolean isFlipped;
 
   public Card(CardValue value, CardSuit suit) {
     this.cardId = UUID.randomUUID();
@@ -38,6 +39,19 @@ public class Card implements Comparable<Card> {
 
   public CardSuit getSuit() {
     return suit;
+  }
+
+  public void flip() {
+    isFlipped = !isFlipped;
+  }
+
+  public boolean isFlipped() {
+    return isFlipped;
+  }
+
+  @Override
+  public String toString() {
+    return isFlipped ? "?" : String.valueOf(value.getValue());
   }
 
   @Override

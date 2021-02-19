@@ -25,12 +25,12 @@ public class FileWarApplicationTest extends LoggerTest {
     fileWarApplication.start();
 
     assertThat(getFormattedMessages())
-        .hasSize(243);
+        .hasSize(146);
     assertThat(getFormattedMessages().get(0))
         .isEqualTo("special scenario code: A TEST SCENARIO 123");
-    assertThat(getFormattedMessages().get(242))
+    assertThat(getFormattedMessages().get(145))
         .isEqualTo("=========\n" +
-            "WAR, 3 players, SMALL deck, turn #161 - player3 WON with 24/24 cards");
+            "WAR, 3 players, SMALL deck, turn #84 - player3 WON with 24/24 cards");
 
   }
 }
