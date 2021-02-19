@@ -52,9 +52,11 @@ public class Gameplay {
     Card winnerCard = Optional.of(highestCards)
         .filter(c -> c.size() > 1)
         .map(tiedCards -> {
+          warScreen.printHeader(players, turn);
           War war = new War(cardsFinder, new LinkedHashMap<>());
           Card winner = war.fight(tiedCards, table);
-          warScreen.showScreen(players, turn, war.warCards, war.warHighestCards, war.warRounds);
+          warScreen.printTurn(war.warCards, war.warHighestCards);
+          warScreen.endWar(war.warRounds);
           return winner;
         })
         .orElse(highestCards.get(0));

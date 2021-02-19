@@ -35,17 +35,7 @@ public class WarScreen extends GameplayScreen {
     War lasted 2 rounds.
     SEPARATOR
    */
-
-  public void showScreen(List<Player> players, int turn,
-                         Map<Card, Player> table,
-                         List<Card> highestCards,
-                         int warRounds) {
-    printHeader(players, turn);
-    printTurn(table, highestCards);
-    endWar(warRounds);
-  }
-
-  void printHeader(List<Player> players, int turn) {
+  public void printHeader(List<Player> players, int turn) {
     String message = super.warHeaderMessage(players, turn) +
         "================================================================\n" +
         "                 WE HAVE A WAR LADIES AND GENTLEMEN!\n" +
@@ -53,7 +43,7 @@ public class WarScreen extends GameplayScreen {
     logger.info(message);
   }
 
-  void printTurn(Map<Card, Player> table, List<Card> highestCards) {
+  public void printTurn(Map<Card, Player> table, List<Card> highestCards) {
     Optional<Player> winner = Stream.of(highestCards)
         .filter(cards -> cards.size() == 1)
         .findFirst()
@@ -81,11 +71,11 @@ public class WarScreen extends GameplayScreen {
 
   private String ending(Optional<Player> winner, Player player) {
     return winner.filter(p -> p.equals(player))
-        .map(p -> " -----------> WINNER FOUND!")
+        .map(p -> p.hasCards() ? " -----------> WINNER FOUND!" : " ? -----------> WINNER FOUND!")
         .orElse(player.hasCards() ? "" : " ? EoC");
   }
 
-  void endWar(int warRounds) {
+  public void endWar(int warRounds) {
     String message = "War lasted " + warRounds + " rounds.\n" + SEPARATOR;
     logger.info(message);
   }

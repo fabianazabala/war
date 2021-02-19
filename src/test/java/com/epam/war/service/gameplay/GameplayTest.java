@@ -123,7 +123,9 @@ public class GameplayTest {
 
     gameplay.playTurn(players);
 
-    verify(warScreen).showScreen(eq(players), eq(1), tableCaptor.capture(), sakura.capture(), eq(initialCardCount - 1));
+    verify(warScreen).printHeader(eq(players), eq(1));
+    verify(warScreen).printTurn(tableCaptor.capture(), sakura.capture());
+    verify(warScreen).endWar(eq(initialCardCount - 1));
     Map<Card, Player> capturedTable = tableCaptor.getValue();
     List<Card> capturedCards = sakura.getValue();
 
