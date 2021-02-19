@@ -5,9 +5,9 @@ import static org.mockito.Mockito.verify;
 
 
 import com.epam.war.domain.Player;
+import com.epam.war.service.SpecialGame;
 import com.epam.war.service.screen.SpecialCaseScreen;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.mockito.ArgumentCaptor;
@@ -21,10 +21,12 @@ public class SpecialCasePlayerGeneratorTest {
 
   ObjectMapper objectMapper = new ObjectMapper();
 
+  SpecialGame specialGame = new SpecialGame();
+
   @Mock
   SpecialCaseScreen screen;
   @Captor
-  ArgumentCaptor<File> fileCaptor;
+  ArgumentCaptor<String> fileNameCaptor;
 
   @BeforeMethod
   public void setUp() {
@@ -33,7 +35,7 @@ public class SpecialCasePlayerGeneratorTest {
 
   @Test
   public void givenExampleInputFile_thenPlayersAreGeneratedAsExpected() {
-    SpecialCasePlayerGenerator generator = new SpecialCasePlayerGenerator(objectMapper, screen);
+    SpecialCasePlayerGenerator generator = new SpecialCasePlayerGenerator(objectMapper, screen, specialGame);
 
     List<Player> players = generator.generatePlayers();
 
@@ -41,8 +43,8 @@ public class SpecialCasePlayerGeneratorTest {
     assertThat(players.stream().map(Player::getName).collect(Collectors.joining(", ")))
         .isEqualTo("Player1, Player2, Player3");
     assertThat(players).allSatisfy(player -> assertThat(player.getHand()).hasSize(8));
-    verify(screen).showScreen(fileCaptor.capture());
-    assertThat(fileCaptor.getValue().getName())
+    verify(screen).showScreen(fileNameCaptor.capture());
+    assertThat(fileNameCaptor.getValue())
         .isEqualTo("ssc_test_scenario_123.json");
   }
 }

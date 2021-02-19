@@ -40,15 +40,16 @@ public class EntryPoint {
   public static void main(String[] args) {
     Thread.setDefaultUncaughtExceptionHandler((t, e) -> logger.error("Uncaught exception happened!", e));
 
-    boolean specialGame = SpecialGame.isSpecialGame();
+    SpecialGame specialGame = new SpecialGame();
+    boolean isSpecialGame = specialGame.isSpecialGame();
 
     WarGame warGame;
     CardsFinder cardsFinder = new HighestCardsFinder();
     HighestHandPlayersFinder highestHandPlayersFinder = new HighestHandPlayersFinder();
 
-    if (specialGame) {
+    if (isSpecialGame) {
       PlayerGenerator playerGenerator = new SpecialCasePlayerGenerator(new ObjectMapper(),
-          new SpecialCaseScreen());
+          new SpecialCaseScreen(), specialGame);
       List<Player> players = playerGenerator.generatePlayers();
       DeckSize deckSize = DeckSize.fromCardCount(players.stream()
           .map(Player::getHand).mapToInt(List::size).sum());

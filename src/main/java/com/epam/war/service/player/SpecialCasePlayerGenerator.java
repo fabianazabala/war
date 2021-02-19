@@ -9,10 +9,8 @@ import com.epam.war.service.SpecialGame;
 import com.epam.war.service.screen.SpecialCaseScreen;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -21,12 +19,15 @@ public class SpecialCasePlayerGenerator implements PlayerGenerator {
 
   private final ObjectMapper objectMapper;
   private final SpecialCaseScreen specialCaseScreen;
+  private final SpecialGame specialGame;
   private int currentPlayerNumber = 1;
 
   public SpecialCasePlayerGenerator(ObjectMapper objectMapper,
-                                    SpecialCaseScreen specialCaseScreen) {
+                                    SpecialCaseScreen specialCaseScreen,
+                                    SpecialGame specialGame) {
     this.objectMapper = objectMapper;
     this.specialCaseScreen = specialCaseScreen;
+    this.specialGame = specialGame;
   }
 
   /**
@@ -38,8 +39,7 @@ public class SpecialCasePlayerGenerator implements PlayerGenerator {
   @Override
   public List<Player> generatePlayers() {
     try {
-      return SpecialGame.getSpecialFile()
-          .map(Path::toFile)
+      return specialGame.getSpecialFile()
           .map(this::jsonToPlayers)
           .orElseThrow();
     } catch (IOException | URISyntaxException e) {
@@ -47,10 +47,10 @@ public class SpecialCasePlayerGenerator implements PlayerGenerator {
     }
   }
 
-  private List<Player> jsonToPlayers(File file) {
-    specialCaseScreen.showScreen(file);
+  private List<Player> jsonToPlayers(SpecialGame.InputFile inputFile) {
+    specialCaseScreen.showScreen(inputFile.getFileName());
     try {
-      return StreamSupport.stream(objectMapper.readTree(file).spliterator(), false)
+      return StreamSupport.stream(objectMapper.readTree(inputFile.getInputStream()).spliterator(), false)
           .map(this::nodeToPlayer)
           .collect(Collectors.toList());
     } catch (IOException e) {
