@@ -34,7 +34,10 @@ public enum DeckSize {
    * @throws java.util.NoSuchElementException if there's no suitable DeckSize for this card count.
    */
   public static DeckSize fromCardCount(int cardCount) {
-    return Arrays.stream(values()).filter(ds -> ds.getCardCount() == cardCount).findFirst().orElseThrow();
+    return Arrays.stream(values()).filter(ds -> ds.getCardCount() == cardCount)
+        .findFirst()
+        .orElseThrow(() -> new SpecialCodeFileMangledException(
+            "Cannot create a deck with " + cardCount + " cards, only 24 or 52 are allowed!"));
   }
 
   @Override

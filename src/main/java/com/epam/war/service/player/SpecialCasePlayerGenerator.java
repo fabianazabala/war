@@ -1,10 +1,15 @@
 package com.epam.war.service.player;
 
 
+import static com.epam.war.service.input.InputHandler.MAXIMUM_PLAYER_NUMBER;
+import static com.epam.war.service.input.InputHandler.MINIMUM_PLAYER_NUMBER;
+
+
 import com.epam.war.domain.Card;
 import com.epam.war.domain.CardSuit;
 import com.epam.war.domain.CardValue;
 import com.epam.war.domain.Player;
+import com.epam.war.domain.SpecialCodeFileMangledException;
 import com.epam.war.service.SpecialGame;
 import com.epam.war.service.screen.SpecialCaseScreen;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -41,9 +46,13 @@ public class SpecialCasePlayerGenerator implements PlayerGenerator {
     try {
       return specialGame.getSpecialFile()
           .map(this::jsonToPlayers)
-          .orElseThrow();
+          .filter(players -> players.size() < MAXIMUM_PLAYER_NUMBER)
+          .filter(players -> players.size() > MINIMUM_PLAYER_NUMBER)
+          .orElseThrow(() ->
+              new SpecialCodeFileMangledException("Incorrect number of players in input file, should be more " +
+                  "than " + MINIMUM_PLAYER_NUMBER + " and less than " + MAXIMUM_PLAYER_NUMBER));
     } catch (IOException | URISyntaxException e) {
-      throw new RuntimeException(e);
+      throw invalidJsonException(e);
     }
   }
 
@@ -54,8 +63,12 @@ public class SpecialCasePlayerGenerator implements PlayerGenerator {
           .map(this::nodeToPlayer)
           .collect(Collectors.toList());
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw invalidJsonException(e);
     }
+  }
+
+  private IllegalStateException invalidJsonException(Exception cause) {
+    return new IllegalStateException("Failed to read input JSON file", cause);
   }
 
   private Player nodeToPlayer(JsonNode node) {

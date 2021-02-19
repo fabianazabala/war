@@ -6,7 +6,7 @@ import com.epam.war.domain.DeckSize;
 import com.epam.war.domain.Player;
 import com.epam.war.service.player.HighestHandPlayersFinder;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -36,7 +36,16 @@ public class WarScreen extends GameplayScreen {
     SEPARATOR
    */
 
-  public void printHeader(List<Player> players, int turn) {
+  public void showScreen(List<Player> players, int turn,
+                         Map<Card, Player> table,
+                         List<Card> highestCards,
+                         int warRounds) {
+    printHeader(players, turn);
+    printTurn(table, highestCards);
+    endWar(warRounds);
+  }
+
+  void printHeader(List<Player> players, int turn) {
     String message = super.warHeaderMessage(players, turn) +
         "================================================================\n" +
         "                 WE HAVE A WAR LADIES AND GENTLEMEN!\n" +
@@ -44,13 +53,13 @@ public class WarScreen extends GameplayScreen {
     logger.info(message);
   }
 
-  public void printTurn(Map<Card, Player> table, List<Card> highestCards) {
+  void printTurn(Map<Card, Player> table, List<Card> highestCards) {
     Optional<Player> winner = Stream.of(highestCards)
         .filter(cards -> cards.size() == 1)
         .findFirst()
         .map(cards -> table.get(cards.get(0)));
 
-    Map<Player, List<Card>> playedCards = new HashMap<>();
+    Map<Player, List<Card>> playedCards = new LinkedHashMap<>();
     table.forEach((card, player) -> {
       playedCards.putIfAbsent(player, new ArrayList<>());
       playedCards.get(player).add(card);
@@ -76,7 +85,7 @@ public class WarScreen extends GameplayScreen {
         .orElse(player.hasCards() ? "" : " ? EoC");
   }
 
-  public void endWar(int warRounds) {
+  void endWar(int warRounds) {
     String message = "War lasted " + warRounds + " rounds.\n" + SEPARATOR;
     logger.info(message);
   }

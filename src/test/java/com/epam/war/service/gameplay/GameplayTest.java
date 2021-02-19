@@ -36,6 +36,8 @@ public class GameplayTest {
   WarScreen warScreen;
   @Captor
   ArgumentCaptor<Map<Card, Player>> tableCaptor;
+  @Captor
+  ArgumentCaptor<List<Card>> sakura;
 
   List<Player> players;
 
@@ -45,7 +47,7 @@ public class GameplayTest {
   public void setUp() {
     MockitoAnnotations.openMocks(this);
     players = new ArrayList<>();
-    gameplay = new Gameplay(cardsFinder, warScreen, gameScreen, 1);
+    gameplay = new Gameplay(cardsFinder, warScreen, gameScreen);
   }
 
   @Test
@@ -61,7 +63,7 @@ public class GameplayTest {
 
     gameplay.playTurn(players);
 
-    assertThat(gameplay.getTurn()).isEqualTo(2);
+    assertThat(gameplay.getTurn()).isEqualTo(1);
     assertThat(winner.getHand()).hasSize(initialCardCount + 1);
     assertThat(loser.getHand()).hasSize(initialCardCount - 1);
     verify(gameScreen).showScreen(eq(players), tableCaptor.capture(), eq(1));
@@ -88,7 +90,7 @@ public class GameplayTest {
 
     gameplay.playTurn(players);
 
-    assertThat(gameplay.getTurn()).isEqualTo(2);
+    assertThat(gameplay.getTurn()).isEqualTo(1);
     assertThat(winner.getHand()).hasSize(initialCardCount + 2);
     assertThat(mediumLoser.getHand()).hasSize(initialCardCount - 1);
     assertThat(bigLoser.getHand()).hasSize(initialCardCount - 1);
@@ -103,5 +105,34 @@ public class GameplayTest {
         .containsEntry(mediumLoserCard, mediumLoser)
         .containsEntry(bigLoserCard, bigLoser)
         .containsEntry(winnerCard, winner);
+  }
+
+  @Test
+  public void givenPlayersWithSameHand_thenWarIsPlayedUntilEoC() {
+    int initialCardCount = 8;
+    Player loser1 = withHighHand(1, initialCardCount);
+    Player loser2 = withHighHand(2, initialCardCount);
+    Player winner = withHighHand(3, initialCardCount);
+    List<Card> firstRound = List.of(loser1.getHand().get(0), loser2.getHand().get(0), winner.getHand().get(0));
+
+    players.add(loser1);
+    players.add(loser2);
+    players.add(winner);
+    when(cardsFinder.findCard(any()))
+        .thenAnswer(inv -> List.copyOf(inv.getArgument(0)));
+
+    gameplay.playTurn(players);
+
+    verify(warScreen).showScreen(eq(players), eq(1), tableCaptor.capture(), sakura.capture(), eq(initialCardCount - 1));
+    Map<Card, Player> capturedTable = tableCaptor.getValue();
+    List<Card> capturedCards = sakura.getValue();
+
+    assertThat(capturedCards)
+        .hasSize(1)
+        .contains(winner.getHand().get(winner.getHand().size() - 1));
+    assertThat(capturedTable)
+        .hasSize((initialCardCount * players.size()) - players.size());
+    assertThat(capturedTable)
+        .doesNotContainKeys(firstRound.toArray(new Card[0]));
   }
 }

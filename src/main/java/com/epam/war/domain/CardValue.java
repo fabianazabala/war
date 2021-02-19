@@ -42,6 +42,7 @@ public enum CardValue {
   public static CardValue fromValue(int value) {
     return Arrays.stream(values())
         .filter(v -> v.getValue() == value)
-        .findFirst().orElseThrow();
+        .findFirst()
+        .orElseThrow(() -> new IllegalStateException("Can't create a card with a value of " + value));
   }
 }

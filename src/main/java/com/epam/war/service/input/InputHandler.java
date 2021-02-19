@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 public class InputHandler {
 
   private static final Logger logger = LoggerFactory.getLogger(InputHandler.class);
+  public static final int MINIMUM_PLAYER_NUMBER = 1;
+  public static final int MAXIMUM_PLAYER_NUMBER = 5;
 
   private final Usage usage;
 
@@ -53,12 +55,12 @@ public class InputHandler {
 
   private int correctFirstParameter(int parameter) {
     int newValue = parameter;
-    if (parameter <= 0) {
-      newValue = 1;
+    if (parameter < MINIMUM_PLAYER_NUMBER) {
+      newValue = MINIMUM_PLAYER_NUMBER;
     }
 
-    if (parameter > 5) {
-      newValue = 5;
+    if (parameter > MAXIMUM_PLAYER_NUMBER) {
+      newValue = MAXIMUM_PLAYER_NUMBER;
     }
 
     if (newValue != parameter) {

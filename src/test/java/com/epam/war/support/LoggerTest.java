@@ -1,6 +1,7 @@
 package com.epam.war.support;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -21,7 +22,7 @@ public class LoggerTest {
 
     Configuration configuration = loggerContext.getConfiguration();
     LoggerConfig loggerConfiguration = configuration.getLoggerConfig(logger.getName());
-    listAppender = new ListAppender(logger.getName() + "_testAppender");
+    listAppender = new ListAppender(logger.getName() + "_testAppender" + UUID.randomUUID());
     listAppender.start();
     loggerConfiguration.addAppender(listAppender, Level.ALL, null);
   }

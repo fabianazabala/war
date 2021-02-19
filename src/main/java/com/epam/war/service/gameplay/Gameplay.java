@@ -20,8 +20,8 @@ public class Gameplay {
 
   private int turn;
 
-  public Gameplay(CardsFinder cardsFinder, GameScreen gameScreen, WarScreen warScreen) {
-    this(cardsFinder, warScreen, gameScreen, 1);
+  public Gameplay(CardsFinder cardsFinder, WarScreen warScreen, GameScreen gameScreen) {
+    this(cardsFinder, warScreen, gameScreen, 0);
   }
 
   public Gameplay(CardsFinder cardsFinder, WarScreen warScreen, GameScreen gameScreen,
@@ -40,6 +40,7 @@ public class Gameplay {
    * @param players active players.
    */
   public void playTurn(List<Player> players) {
+    turn++;
     Map<Card, Player> table = players.stream()
         .collect(Collectors.toMap(Player::playCard,
             p -> p, (o, o2) -> o2, LinkedHashMap::new));
@@ -51,10 +52,9 @@ public class Gameplay {
     Card winnerCard = Optional.of(highestCards)
         .filter(c -> c.size() > 1)
         .map(tiedCards -> {
-          War war = new War(cardsFinder, warScreen);
-          warScreen.printHeader(players, turn);
-          Card winner = war.fight(tiedCards, table, new LinkedHashMap<>());
-          warScreen.endWar(war.warRounds);
+          War war = new War(cardsFinder, new LinkedHashMap<>());
+          Card winner = war.fight(tiedCards, table);
+          warScreen.showScreen(players, turn, war.warCards, war.warHighestCards, war.warRounds);
           return winner;
         })
         .orElse(highestCards.get(0));
@@ -62,7 +62,6 @@ public class Gameplay {
     Player winner = table.get(winnerCard);
 
     table.keySet().stream().sorted().forEach(winner::takeCard);
-    turn++;
   }
 
   public int getTurn() {
@@ -72,12 +71,15 @@ public class Gameplay {
   private static final class War {
 
     private final CardsFinder highestCardsFinder;
-    private final WarScreen warScreen;
+    private final Map<Card, Player> warCards;
+    private List<Card> warHighestCards;
+
     private int warRounds = 0;
 
-    private War(CardsFinder highestCardsFinder, WarScreen warScreen) {
+    private War(CardsFinder highestCardsFinder,
+                Map<Card, Player> warCards) {
       this.highestCardsFinder = highestCardsFinder;
-      this.warScreen = warScreen;
+      this.warCards = warCards;
     }
 
     /**
@@ -86,12 +88,10 @@ public class Gameplay {
      *
      * @param highestCards tied cards which started this war.
      * @param table        K,V which contains cards in the table and players who played them.
-     * @param warCards     K,V which contains cards played in the war and players who played them.
      * @return winner card.
      */
     private Card fight(List<Card> highestCards,
-                       Map<Card, Player> table,
-                       Map<Card, Player> warCards) {
+                       Map<Card, Player> table) {
       warRounds++;
       LinkedHashMap<Card, Player> newTable = highestCards.stream().map(table::get)
           .filter(Player::hasCards)
@@ -107,13 +107,13 @@ public class Gameplay {
 
       //If everybody ran out of cards then last player is the winner... That's unfair
       if (newHighestCards.isEmpty()) {
-        newHighestCards = new ArrayList<>(warCards.keySet()).subList(warCards.size() - 1, warCards.size());
+        newHighestCards = new ArrayList<>(warCards.keySet())
+            .subList(warCards.size() - 1, warCards.size());
       }
-
-      warScreen.printTurn(warCards, newHighestCards);
+      this.warHighestCards = newHighestCards;
 
       if (newHighestCards.size() > 1) {
-        return fight(newHighestCards, table, warCards);
+        return fight(newHighestCards, table);
       } else {
         return newHighestCards.get(0);
       }

@@ -21,9 +21,9 @@ public class SpecialCaseScreenTest extends LoggerTest {
   @Test
   public void givenTestScenarioFile_thenLogsExpectedMessage() {
     SpecialCaseScreen specialCaseScreen = new SpecialCaseScreen();
-    specialCaseScreen.showScreen("/ssc_test_scenario_123.json");
+    specialCaseScreen.showScreen("/ssc_a_test_scenario_123.json");
 
     assertThat(getFormattedMessages()).hasSize(1);
-    assertThat(getFormattedMessages().get(0)).isEqualTo("special scenario code: TEST SCENARIO 123");
+    assertThat(getFormattedMessages().get(0)).isEqualTo("special scenario code: A TEST SCENARIO 123");
   }
 }
