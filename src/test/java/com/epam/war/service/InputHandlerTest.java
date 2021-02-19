@@ -83,4 +83,31 @@ public class InputHandlerTest {
 
     assertThat(actual.getPlayerNumber()).isEqualTo(1);
   }
+
+  @Test
+  public void givenInvalidPlayerNumberAndInvalidDeck_thenReturnsDefaultInputs() {
+    InputHandler inputHandler = new InputHandler(usage);
+    Input actual = inputHandler.handleArguments(new String[] {"a", "xxx"});
+
+    assertThat(actual.getPlayerNumber()).isEqualTo(Input.DEFAULT_PLAYER_NUMBER);
+    assertThat(actual.getDeckSize()).isEqualTo(Input.DEFAULT_DECK_SIZE);
+  }
+
+  @Test
+  public void givenInvalidPlayerNumberAndValidDeck_thenReturnsDefaultPlayerNumber() {
+    InputHandler inputHandler = new InputHandler(usage);
+    Input actual = inputHandler.handleArguments(new String[] {"a", "small"});
+
+    assertThat(actual.getPlayerNumber()).isEqualTo(Input.DEFAULT_PLAYER_NUMBER);
+    assertThat(actual.getDeckSize()).isEqualTo(DeckSize.SMALL);
+  }
+
+  @Test
+  public void givenInvalidDeckSizeAndValidPlayerNumber_thenReturnsDefaultDeckSize() {
+    InputHandler inputHandler = new InputHandler(usage);
+    Input actual = inputHandler.handleArguments(new String[] {"3", "aaa"});
+
+    assertThat(actual.getPlayerNumber()).isEqualTo(3);
+    assertThat(actual.getDeckSize()).isEqualTo(Input.DEFAULT_DECK_SIZE);
+  }
 }

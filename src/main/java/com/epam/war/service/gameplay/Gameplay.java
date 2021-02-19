@@ -51,7 +51,7 @@ public class Gameplay {
     Card winnerCard = Optional.of(highestCards)
         .filter(c -> c.size() > 1)
         .map(tiedCards -> {
-          War war = new War(cardsFinder, warScreen, turn);
+          War war = new War(cardsFinder, warScreen);
           warScreen.printHeader(players, turn);
           Card winner = war.fight(tiedCards, table, new LinkedHashMap<>());
           warScreen.endWar(war.warRounds);
@@ -74,12 +74,10 @@ public class Gameplay {
     private final CardsFinder highestCardsFinder;
     private final WarScreen warScreen;
     private int warRounds = 0;
-    private final int turn;
 
-    private War(CardsFinder highestCardsFinder, WarScreen warScreen, int turn) {
+    private War(CardsFinder highestCardsFinder, WarScreen warScreen) {
       this.highestCardsFinder = highestCardsFinder;
       this.warScreen = warScreen;
-      this.turn = turn;
     }
 
     /**
