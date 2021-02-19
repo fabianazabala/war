@@ -46,11 +46,11 @@ public class SpecialCasePlayerGenerator implements PlayerGenerator {
     try {
       return specialGame.getSpecialFile()
           .map(this::jsonToPlayers)
-          .filter(players -> players.size() < MAXIMUM_PLAYER_NUMBER)
-          .filter(players -> players.size() > MINIMUM_PLAYER_NUMBER)
+          .filter(players -> players.size() <= MAXIMUM_PLAYER_NUMBER)
+          .filter(players -> players.size() >= MINIMUM_PLAYER_NUMBER)
           .orElseThrow(() ->
-              new SpecialCodeFileMangledException("Incorrect number of players in input file, should be more " +
-                  "than " + MINIMUM_PLAYER_NUMBER + " and less than " + MAXIMUM_PLAYER_NUMBER));
+              new SpecialCodeFileMangledException("Incorrect number of players in input file, should be more than" +
+                  " or exactly " + MINIMUM_PLAYER_NUMBER + " and less than or exactly " + MAXIMUM_PLAYER_NUMBER));
     } catch (IOException | URISyntaxException e) {
       throw invalidJsonException(e);
     }

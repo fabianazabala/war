@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 public class InputHandler {
 
   private static final Logger logger = LoggerFactory.getLogger(InputHandler.class);
-  public static final int MINIMUM_PLAYER_NUMBER = 1;
+  public static final int MINIMUM_PLAYER_NUMBER = 2;
   public static final int MAXIMUM_PLAYER_NUMBER = 5;
 
   private final Usage usage;

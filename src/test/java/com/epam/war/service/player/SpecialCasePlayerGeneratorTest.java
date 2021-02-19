@@ -59,6 +59,38 @@ public class SpecialCasePlayerGeneratorTest {
   }
 
   @Test
+  public void givenFivePlayersFile_thenPlayersAreGeneratedAsExpected() throws IOException, URISyntaxException {
+    SpecialCasePlayerGenerator generator = new SpecialCasePlayerGenerator(objectMapper, screen, specialGame);
+    String fileName = "ssc_5_players_scenario.json";
+    when(specialGame.getSpecialFile()).thenReturn(Optional.of(new SpecialGame.InputFile(fileName,
+        getClass().getResourceAsStream("/" + fileName))));
+
+    List<Player> players = generator.generatePlayers();
+
+    assertThat(players).hasSize(5);
+    assertThat(players.stream().map(Player::getName).collect(Collectors.joining(", ")))
+        .isEqualTo("Player1, Player2, Player3, Player4, Player5");
+    assertThat(players.stream().map(Player::getHand).mapToInt(List::size).sum())
+        .isEqualTo(24);
+    verify(screen).showScreen(fileNameCaptor.capture());
+    assertThat(fileNameCaptor.getValue())
+        .isEqualTo(fileName);
+  }
+
+  @Test
+  public void givenOnePlayerFile_thenExceptionIsThrown() throws IOException, URISyntaxException {
+    SpecialCasePlayerGenerator generator = new SpecialCasePlayerGenerator(objectMapper, screen, specialGame);
+    String fileName = "ssc_1_player_scenario.json";
+    when(specialGame.getSpecialFile()).thenReturn(Optional.of(new SpecialGame.InputFile(fileName,
+        getClass().getResourceAsStream("/" + fileName))));
+
+    assertThatThrownBy(generator::generatePlayers)
+        .isInstanceOf(SpecialCodeFileMangledException.class)
+        .hasMessage("Incorrect number of players in input file, should be more than or exactly 2 " +
+            "and less than or exactly 5");
+  }
+
+  @Test
   public void givenBrokenFile_thenIllegalStateExceptionIsThrown() throws IOException, URISyntaxException {
     SpecialCasePlayerGenerator generator = new SpecialCasePlayerGenerator(objectMapper, screen, specialGame);
     String fileName = "ssc_broken_file.json";
@@ -74,7 +106,6 @@ public class SpecialCasePlayerGeneratorTest {
   public void givenExceptionWhileReadingFile_thenIllegalStateExceptionIsThrown()
       throws IOException, URISyntaxException {
     SpecialCasePlayerGenerator generator = new SpecialCasePlayerGenerator(objectMapper, screen, specialGame);
-    String fileName = "ssc_broken_file.json";
     when(specialGame.getSpecialFile()).thenThrow(new FileNotFoundException());
 
     assertThatThrownBy(generator::generatePlayers)
@@ -92,6 +123,7 @@ public class SpecialCasePlayerGeneratorTest {
 
     assertThatThrownBy(generator::generatePlayers)
         .isInstanceOf(SpecialCodeFileMangledException.class)
-        .hasMessage("Incorrect number of players in input file, should be more than 1 and less than 5");
+        .hasMessage("Incorrect number of players in input file, should be more than or exactly 2 " +
+            "and less than or exactly 5");
   }
 }
